@@ -1,6 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
+    queryInterface.createTable()
     return queryInterface.createTable('Projects', {
       id: {
         allowNull: false,
@@ -27,8 +28,7 @@ module.exports = {
         defaultValue: ''
       },
       avgScore: {
-        type: Sequelize.NUMERIC(3, 2),
-        references: { model: 'Reviews'},
+        type: Sequelize.DECIMAL(3, 2),
         defaultValue: null
       },
       createdAt: {
