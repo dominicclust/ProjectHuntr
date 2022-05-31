@@ -1,12 +1,15 @@
 'use strict';
+const { Op } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   const Project = sequelize.define('Project', {
     title: {
       type: DataTypes.STRING,
-      unique: true,
       allowNull: false,
       validate: {
-        len: [4, 100]
+        unique: true,
+        len: {
+          [Op.in]: [4, 200]
+        }
       }
     },
     ownerId: {
@@ -18,9 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     imageUrl: DataTypes.STRING,
-    aggregate: {
-      type: DataTypes.FLOAT(3, 2)
-    }
+    avgScore: DataTypes.NUMERIC(3, 2)
   }, {});
   Project.associate = function(models) {
     Project.belongsTo(models.User, { foreignKey: 'ownerId'})

@@ -9,7 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       title: {
-        type: Sequelize.STRING(100),
+        type: Sequelize.STRING(200),
         allowNull: false,
         unique: true
       },
@@ -24,18 +24,21 @@ module.exports = {
       },
       imageUrl: {
         type: Sequelize.STRING,
+        defaultValue: ''
       },
-      aggregate: {
-        type: Sequelize.FLOAT
+      avgScore: {
+        type: Sequelize.NUMERIC(3, 2),
+        references: { model: 'Reviews'},
+        defaultValue: null
       },
       createdAt: {
-        allowNull: false,
         type: Sequelize.DATE,
+        allowNull: false,
         defaultValue: Sequelize.fn('now')
       },
       updatedAt: {
-        allowNull: false,
         type: Sequelize.DATE,
+        allowNull: false,
         defaultValue: Sequelize.fn('now')
       }
     });
