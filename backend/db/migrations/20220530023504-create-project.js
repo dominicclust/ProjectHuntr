@@ -1,7 +1,6 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    queryInterface.createTable()
     return queryInterface.createTable('Projects', {
       id: {
         allowNull: false,
@@ -12,7 +11,10 @@ module.exports = {
       title: {
         type: Sequelize.STRING(200),
         allowNull: false,
-        unique: true
+        unique: true,
+        validate: {
+          len: [4, 200]
+        }
       },
       ownerId: {
         type: Sequelize.INTEGER,
@@ -29,16 +31,16 @@ module.exports = {
       },
       avgScore: {
         type: Sequelize.DECIMAL(3, 2),
-        defaultValue: null
+        defaultValue: 2.50
       },
       createdAt: {
-        type: Sequelize.DATE,
         allowNull: false,
+        type: Sequelize.DATE,
         defaultValue: Sequelize.fn('now')
       },
       updatedAt: {
-        type: Sequelize.DATE,
         allowNull: false,
+        type: Sequelize.DATE,
         defaultValue: Sequelize.fn('now')
       }
     });

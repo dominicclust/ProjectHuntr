@@ -1,16 +1,11 @@
 'use strict';
-const { Op } = require('sequelize')
+// const { Op } = require('Sequelize')
 module.exports = (sequelize, DataTypes) => {
   const Project = sequelize.define('Project', {
     title: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        unique: true,
-        len: {
-          [Op.in]: [4, 200]
-        }
-      }
+      unique: true
     },
     ownerId: {
       type: DataTypes.INTEGER,
@@ -21,11 +16,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     imageUrl: DataTypes.STRING,
-    avgScore: DataTypes.NUMERIC(3, 2)
+    avgScore: DataTypes.DECIMAL(3, 2)
   }, {});
   Project.associate = function(models) {
     Project.belongsTo(models.User, { foreignKey: 'ownerId'})
-    Project.hasMany(models.Review, { foreignKey: 'projectId'})
+    // Project.hasMany(models.Review, { foreignKey: 'projectId'})
   };
   return Project;
 };
