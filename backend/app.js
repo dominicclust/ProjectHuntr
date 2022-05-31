@@ -40,10 +40,6 @@ app.use(
         }
     })
 );
-app.use((req, res, next) => {
-    console.log('\n\n', req, '\n\n')
-    next()
-})
 // connect the routes
 app.use(routes);
 
