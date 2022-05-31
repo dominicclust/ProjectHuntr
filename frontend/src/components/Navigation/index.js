@@ -19,12 +19,18 @@ function Navigation({ user }){
   }
 
   return (
-    <ul>
-      <li>
-        <NavLink exact to="/">Home</NavLink>
+    <nav>
+      <div>
+        <NavLink exact to="/"><i class="fa-solid fa-circle-h" style={{color: 'green', width: '3vw', height: '3vw'}}></i></NavLink>
+      </div>
+      <div>
+        <h3 className={'title'} >ProjectHuntr</h3>
+      </div>
+      <span style={{width: '50vw'}}></span>
+      <div>
         {sessionLinks}
-      </li>
-    </ul>
+      </div>
+    </nav>
   );
 }
 
