@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import * as sessionActions from '../../store/session'
 import { Redirect } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -12,9 +12,13 @@ const SignupFormPage = () => {
     const [confirm, setConfirm] = useState('')
     const [valErrors, setValErrors] = useState([])
 
-    if (user) return (
-        <Redirect to='/' />
-    )
+    useEffect(() => {
+        const errors = []
+        if (username.length < 4 || username.length > 30) errors.push('Username must be between 4 and 30 characters.')
+        if (!email.includes('@')) errors.push('Please use a valid email address.')
+        if (password.length < 8) errors.push('Password must be longer than 7 characters.')
+        setValErrors(errors)
+    }, [username, email, password, valErrors])
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -24,6 +28,10 @@ const SignupFormPage = () => {
             return <Redirect to='/' />
         }
     }
+
+    if (user) return (
+        <Redirect to='/' />
+    )
 
     return (
         <div>

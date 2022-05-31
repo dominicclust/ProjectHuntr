@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux';
+import { Redirect } from 'react-router-dom'
 import * as sessionActions from '../../store/session';
 import './Navigation.css'
 
@@ -26,7 +27,7 @@ function ProfileButton({ user }) {
 
   const logout = (e) => {
     e.preventDefault();
-    dispatch(sessionActions.logout());
+    dispatch(sessionActions.logout()).then(<Redirect to='/login' />);
   };
 
   return (
