@@ -33,6 +33,13 @@ router.post('/', validateProject, asyncHandler(async (req, res) => {
 }))
 
 router.put('/:projectId', validateProject, asyncHandler(async (req, res) => {
+    const { id, title, ownerId, description, imageUrl } = req.body;
+    const updatedProject = await Project.update({title, ownerId, description, imageUrl}, {where: {id}})
+    return res.json({updatedProject})
+}))
 
+router.delete('/:projectId', asyncHandler(async (req, res) => {
+    const {id} = req.params
+    return await Project.destroy(id)
 }))
 module.exports = router;
