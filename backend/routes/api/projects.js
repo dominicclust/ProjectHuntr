@@ -1,5 +1,6 @@
 const express = require('express');
 const asyncHandler = require('express-async-handler');
+const { Op } = require('sequelize')
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
@@ -26,13 +27,22 @@ router.get('/', asyncHandler(async (req, res) => {
     return res.json([...projects])
 }))
 
+router.get('/:projectId', asyncHandler(async(req, res) => {
+    const { projectId } = req.params
+    const project = await Project.findByPk(parseInt(projectId))
+    return res.json(project)
+}))
+
+
 router.post('/', validateProject, asyncHandler(async (req, res) => {
     const {title, ownerId, description, imageUrl} = req.body;
     const project = await Project.create({title, ownerId, description, imageUrl})
-    return res.json({project})
+    return res.json(project)
 }))
 
-router.put('/:projectId', validateProject, asyncHandler(async (req, res) => {
-
+router.put('/:projectId', requireAuth, validateProject, asyncHandler(async (req, res) => {
+    const {id, title, ownerId, description, imageUrl} = req.body;
+    const project = await Project.update({title, description, imageUrl}, {where: {[Op.and] : [{id, ownerId}]}})
+    return res.json(project)
 }))
 module.exports = router;
