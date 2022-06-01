@@ -19,7 +19,7 @@ function Navigation({ user }){
   }
 
   return (
-    <nav>
+    <nav style={{backgroundColor: '#222222', color: 'white'}}>
       <div>
         <NavLink exact to="/"><i class="fa-solid fa-circle-h" style={{color: 'green', width: '3vw', height: '3vw'}}></i></NavLink>
       </div>
