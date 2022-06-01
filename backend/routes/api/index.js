@@ -2,11 +2,12 @@ const router = require('express').Router()
 const sessionRouter = require('./session');
 const usersRouter = require('./users');
 const projectsRouter = require('./projects');
+const reviewsRouter = require('./reviews');
 
 router.use('/session', sessionRouter);
 router.use('/users', usersRouter);
 router.use('/projects', projectsRouter);
-
+router.use('/reviews', reviewsRouter)
 
 // TEST CODE
 
