@@ -25,14 +25,26 @@ router.get('/', asyncHandler(async (req, res) => {
     const projects = await Project.findAll({include: [User, Review]})
     return res.json([...projects])
 }))
-
-router.post('/', validateProject, asyncHandler(async (req, res) => {
-    const {title, ownerId, description, imageUrl} = req.body;
-    const project = await Project.create({title, ownerId, description, imageUrl})
-    return res.json({project})
+router.get('/:projectId', asyncHandler(async (req, res) => {
+    const { projectId } = req.params
+    const project = await Project.findByPk(projectId)
+    return res.json({...project})
 }))
 
-router.put('/:projectId', validateProject, asyncHandler(async (req, res) => {
+router.post('/', requireAuth, validateProject, asyncHandler(async (req, res) => {
+    const {title, ownerId, description, imageUrl} = req.body;
+    const project = await Project.create({title, ownerId, description, imageUrl})
+    return res.json({...project})
+}))
 
+router.put('/:projectId', requireAuth, validateProject, asyncHandler(async (req, res) => {
+    const { id, title, ownerId, description, imageUrl } = req.body;
+    const updatedProject = await Project.update({title, ownerId, description, imageUrl}, {where: {id}})
+    return res.json({...updatedProject})
+}))
+
+router.delete('/:projectId', asyncHandler(async (req, res) => {
+    const {id} = req.params
+    return await Project.destroy(id)
 }))
 module.exports = router;
