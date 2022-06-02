@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux';
-import { Redirect } from 'react-router-dom'
-import * as sessionActions from '../../store/session';
+import { useHistory } from 'react-router-dom';
+import { logout } from '../../store/session';
 import './Navigation.css'
 
 function ProfileButton({ user }) {
+  const history = useHistory()
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
 
@@ -25,9 +26,11 @@ function ProfileButton({ user }) {
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
 
-  const logout = (e) => {
+  const signout = (e) => {
     e.preventDefault();
-    dispatch(sessionActions.logout()).then(<Redirect to='/login' />);
+    dispatch(logout());
+    history.push('/');
+
   };
 
   return (
@@ -40,7 +43,7 @@ function ProfileButton({ user }) {
           <li>{user.username}</li>
           <li>{user.email}</li>
           <li>
-            <button onClick={logout}>Log Out</button>
+            <button onClick={signout}>Log Out</button>
           </li>
         </ul>
       )}

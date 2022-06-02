@@ -24,7 +24,11 @@ span {
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    text-decoration: none;
 }
 h5 {
     margin-left: 2vw;
+}
+a {
+    text-decoration: none;
 }
