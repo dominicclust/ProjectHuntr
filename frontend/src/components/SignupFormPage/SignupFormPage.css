@@ -1,3 +1,12 @@
+#backdrop {
+    position: absolute;
+    top:0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    background-color: #20AA22;
+    z-index: -3;
+}
 #signup-form{
     display: flex;
     flex-direction: column;
@@ -15,9 +24,13 @@ form {
     width: 40%;
     height: fit-content;
 }
-input {
+#username > input,
+#email > input,
+#password > input,
+#confirm-password > input {
     border-radius: 5px;
-    background-color: #AAAAAA;
+    color: #222222;
+    background-color: #CCCCCC;
     width: 25vw;
     height: 2vw;
 }

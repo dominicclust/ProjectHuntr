@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { postProject } from '../../store/project';
 import { useHistory } from 'react-router-dom';
+import './ProjectForm.css'
 
 const ProjectForm = (user) => {
     const history = useHistory();
@@ -18,7 +19,7 @@ const ProjectForm = (user) => {
     useEffect(() => {
         postSuccess && history.push('/projects')
     }, [postSuccess, history])
-    
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const errors = [];

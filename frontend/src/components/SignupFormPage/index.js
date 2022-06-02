@@ -31,61 +31,63 @@ const SignupFormPage = () => {
     }
 
     return (
-        <div id='signup-form'>
-            <form onSubmit={handleSubmit} >
-                <h2>Ready to join the hunt?</h2>
-                <h4>Fill out the form below, and you'll have access to all of ProjectHuntr's features!</h4>
-                <ul>
-                    {valErrors.length > 0 && valErrors.map((error, i) => <li key={i}>{error}</li>)}
-                </ul>
-                <div id='username'>
-                    <label>
-                        Username:
-                    </label>
-                        <input
-                            type='text'
-                            value={username}
-                            placeholder='something_unique'
-                            onChange={(e) => setUsername(e.target.value)}
-                        />
-                </div>
-                <div id='email'>
-                <label>
-                    Email Address:
-                </label>
-                    <input
-                        type='email'
-                        value={email}
-                        placeholder='i.m.awesome@projecthuntr.com'
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                </div>
-                <div id='password'>
-                    <label>
-                        Password:
-                    </label>
-                        <input
-                            type='password'
-                            value={password}
-                            placeholder='M@k3_sur3_the5e_ma+ch!'
-                            onChange={(e) => setPassword(e.target.value)}
+        <div id='backdrop'>
+            <div id='signup-form'>
+                <form onSubmit={handleSubmit} >
+                    <h2>Ready to join the hunt?</h2>
+                    <h4>Fill out the form below, and you'll have access to all of ProjectHuntr's features!</h4>
+                    <ul>
+                        {valErrors.length > 0 && valErrors.map((error, i) => <li key={i}>{error}</li>)}
+                    </ul>
+                    <div id='username'>
+                        <label>
+                            Username:
+                        </label>
+                            <input
+                                type='text'
+                                value={username}
+                                placeholder='something_unique'
+                                onChange={(e) => setUsername(e.target.value)}
                             />
-                </div>
-                <div id='confirm-password'>
+                    </div>
+                    <div id='email'>
                     <label>
-                        Confirm Password:
+                        Email Address:
                     </label>
                         <input
-                            type='password'
-                            value={confirm}
-                            placeholder='M@k3_sur3_the5e_ma+ch!'
-                            onChange={(e) => setConfirm(e.target.value)}
+                            type='email'
+                            value={email}
+                            placeholder='i.m.awesome@projecthuntr.com'
+                            onChange={(e) => setEmail(e.target.value)}
                         />
-                </div>
-                <div>
-                    <button disabled={valErrors.length !== 0}>Sign Up</button>
-                </div>
-            </form>
+                    </div>
+                    <div id='password'>
+                        <label>
+                            Password:
+                        </label>
+                            <input
+                                type='password'
+                                value={password}
+                                placeholder='M@k3_sur3_the5e_ma+ch!'
+                                onChange={(e) => setPassword(e.target.value)}
+                                />
+                    </div>
+                    <div id='confirm-password'>
+                        <label>
+                            Confirm Password:
+                        </label>
+                            <input
+                                type='password'
+                                value={confirm}
+                                placeholder='M@k3_sur3_the5e_ma+ch!'
+                                onChange={(e) => setConfirm(e.target.value)}
+                            />
+                    </div>
+                    <div>
+                        <button disabled={valErrors.length !== 0}>Sign Up</button>
+                    </div>
+                </form>
+            </div>
         </div>
     )
 

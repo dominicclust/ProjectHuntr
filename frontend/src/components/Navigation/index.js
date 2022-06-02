@@ -1,26 +1,25 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
 
-function Navigation({ isLoaded }){
-  const user = useSelector(state => state.session.user)
+function Navigation({ isLoaded, user }){
+
   let sessionLinks;
   if (user) {
     sessionLinks = (
       <>
-        <Link className='sessionLink' to='/projects/new'>
+        <NavLink className='sessionLink' to='/projects/new'>
           Submit Your Project
-        </Link>
+        </NavLink>
         <ProfileButton className='sessionLink' user={user} />
       </>
     );
   } else {
     sessionLinks = (
       <>
-        <Link className='sessionLink' to='/login'>Sign In</Link>
-        <Link className='sessionLink' to="/signup">Sign Up</Link>
+        <NavLink className='sessionLink' to='/login'>Sign In</NavLink>
+        <NavLink className='sessionLink' to="/signup">Sign Up</NavLink>
       </>
     );
   }
@@ -28,10 +27,11 @@ function Navigation({ isLoaded }){
   return (
     <nav style={{backgroundColor: '#222222', color: 'white'}}>
       <div>
-        <Link exact to="/"><i class="fa-solid fa-circle-h" style={{color: 'green', width: '3vw', height: '3vw'}}></i></Link>
-      </div>
-      <div>
-        <h3 className={'title'} >ProjectHuntr</h3>
+        <NavLink exact to="/">
+          <h3 className='title' >Project</h3>
+          <i class="fa-solid fa-circle-h" style={{color: '#20AA22', width: '3vw', height: '3vw'}}></i>
+          <h3 className='title'>untr</h3>
+        </NavLink>
       </div>
       <span style={{width: '50vw'}}>
 
@@ -41,7 +41,7 @@ function Navigation({ isLoaded }){
         <h5>Redux</h5>
       </span>
       <div>
-        {sessionLinks}
+        {isLoaded && sessionLinks}
       </div>
     </nav>
   );

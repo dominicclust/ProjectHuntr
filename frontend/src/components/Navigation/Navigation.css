@@ -1,23 +1,28 @@
-
-nav {
+nav{
     display: flex;
     position: fixed;
     top: 0px;
     left: 0px;
     right: 0px;
+    box-sizing: border-box;
     padding: 10px 10px;
     justify-content: space-between;
     align-items: center;
     border-bottom: 2px solid gray;
     flex-direction: row;
+
 }
 nav > *,
 nav > * > *,
 nav > * > * > * {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: white;
     text-decoration: none;
     background-color: #222222;
 }
+
 .user {
     width: 4vw;
     height: 4vw;
