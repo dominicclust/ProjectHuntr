@@ -31,7 +31,7 @@ function LoginForm() {
   }
 
   return (
-    <>
+    <div>
       <span style={{display: 'flex', justifyContent: 'center'}}>
         <h2>Sign in. The </h2>
         <i className='fa-solid fa-circle-h' style={{color: 'green', width: '3vw', length: '3vw'}}></i>
@@ -61,7 +61,7 @@ function LoginForm() {
         </label>
         <button type="submit">Log In</button>
       </form>
-    </>
+    </div>
   );
 }
 

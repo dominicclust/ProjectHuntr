@@ -9,6 +9,7 @@ nav {
     align-items: center;
     border-bottom: 2px solid gray;
     flex-direction: row;
+    text-decoration: none;
 }
 
 .user {
@@ -22,4 +23,8 @@ nav {
 span {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
+}
+h5 {
+    margin-left: 2vw;
 }

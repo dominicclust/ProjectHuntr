@@ -21,13 +21,13 @@ function App() {
         <Navigation user={user} />
       </div>
       <Switch>
-        <Route path='login'>
+        <Route path='/login'>
           <LoginFormModal />
         </Route>
         <Route path='/signup'>
           <SignupFormPage />
         </Route>
-        <Route path='/projects'>
+        <Route path={['/', '/projects']}>
           <ProjectPage user={user} />
         </Route>
         <Route path='/projects/new'>

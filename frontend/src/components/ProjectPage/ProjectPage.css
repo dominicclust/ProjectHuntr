@@ -6,15 +6,14 @@
     right: 0;
     left: 0;
     bottom: 0;
-    z-index: 0;
 }
 .project {
     display: flex;
     align-items: center;
     width: 100%;
     margin: 2vw 0 2vw 0;
-    z-index: 1;
 }
+
 .logo-thumb > img {
     width: 10vw;
     height: 10vw;
