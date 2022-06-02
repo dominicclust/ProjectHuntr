@@ -20,10 +20,13 @@ function App() {
         <Navigation isLoaded={isLoaded}/>
       </div>
       <Switch>
+        <Route path='/login'>
+          
+        </Route>
         <Route path='/signup'>
           <SignupFormPage />
         </Route>
-        <Route path={['/', '/projects']}>
+        <Route path='/' exact>
           <ProjectPage />
         </Route>
         <Route path='/projects/new'>

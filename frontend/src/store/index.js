@@ -5,7 +5,7 @@ import thunk from 'redux-thunk';
 
 const rootReducer = combineReducers({
     session: sessionReducer,
-    project: projectReducer
+    projects: projectReducer
 })
 
 let enhancer;

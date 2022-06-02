@@ -12,12 +12,13 @@ const ProjectForm = (user) => {
     const [valErrors, setValErrors] = useState([])
     const [postSuccess, setPostSuccess] = useState(false)
 
-    const projects = useSelector(state => Object.values(state.project.projects))
+    const projects = useSelector(state => Object.values(state.projects))
 
     const dispatch = useDispatch();
     useEffect(() => {
         postSuccess && history.push('/projects')
     }, [postSuccess, history])
+    
     const handleSubmit = (e) => {
         e.preventDefault();
         const errors = [];

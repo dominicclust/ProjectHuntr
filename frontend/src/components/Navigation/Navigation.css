@@ -1,3 +1,4 @@
+
 nav {
     display: flex;
     position: fixed;
@@ -9,9 +10,14 @@ nav {
     align-items: center;
     border-bottom: 2px solid gray;
     flex-direction: row;
-    text-decoration: none;
 }
-
+nav > *,
+nav > * > *,
+nav > * > * > * {
+    color: white;
+    text-decoration: none;
+    background-color: #222222;
+}
 .user {
     width: 4vw;
     height: 4vw;
@@ -24,11 +30,15 @@ span {
     display: flex;
     align-items: center;
     justify-content: flex-start;
+}
+span > * {
     text-decoration: none;
+    color: white;
+    background-color: #222222;
 }
 h5 {
     margin-left: 2vw;
 }
-a {
-    text-decoration: none;
+.sessionLink {
+    margin: 1vw;
 }

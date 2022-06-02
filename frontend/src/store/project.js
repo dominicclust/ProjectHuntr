@@ -69,28 +69,26 @@ export const deleteProject = (id) => async dispatch => {
     return response;
 }
 
-const initialState = { projects: {} }
-
-const projectReducer = (state = initialState, action) => {
+const projectReducer = (state = {}, action) => {
     let newState;
     switch (action.type) {
         case LOAD_PROJECTS:
             newState = {...state}
             action.projects.map(project => {
-                newState.projects[project.id] = project
+                return newState[project.id] = project
             })
             return newState;
         case ADD_PROJECT:
             newState = {...state}
-            newState.projects[action.project.id] = action.project
+            newState[action.project.id] = action.project
             return newState;
         case EDIT_PROJECT:
             newState = {...state,
-                        ...[action.project.id] = action.project}
+                        [action.project.id]: action.project}
             return newState;
         case DELETE_PROJECT:
             newState = {...state}
-            delete newState.projects[action.id]
+            delete newState[action.id]
             return newState;
         default:
             return state;

@@ -11,7 +11,7 @@ const ProjectPage = () => {
         dispatch(getProjects())
     }, [dispatch])
 
-    const projects = useSelector(state => state.project.projects)
+    const projects = useSelector(state => state.projects)
     const projectArray = Object.values(projects)
     return (
         <div className='container project-page'>

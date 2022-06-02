@@ -1,11 +1,12 @@
 .container {
     margin-left: 10vw;
     margin-top: 5.5vw;
-    position: fixed;
+    position: absolute;
     top: 5vw;
     right: 0;
     left: 0;
     bottom: 0;
+    z-index: -1;
 }
 .project {
     display: flex;
