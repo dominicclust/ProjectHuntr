@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import ProfileButton from './ProfileButton';
+import LoginFormModal from '../LoginForm';
 import './Navigation.css';
 
 function Navigation({ user }){
@@ -7,12 +8,17 @@ function Navigation({ user }){
   let sessionLinks;
   if (user) {
     sessionLinks = (
-      <ProfileButton user={user} />
+      <>
+        <NavLink to='/projects/new'>
+          Submit Your Project
+        </NavLink>
+        <ProfileButton user={user} />
+      </>
     );
   } else {
     sessionLinks = (
       <>
-        <NavLink to="/login">Log In</NavLink>
+        <LoginFormModal />
         <NavLink to="/signup">Sign Up</NavLink>
       </>
     );
@@ -26,7 +32,15 @@ function Navigation({ user }){
       <div>
         <h3 className={'title'} >ProjectHuntr</h3>
       </div>
-      <span style={{width: '50vw'}}></span>
+      <span style={{width: '50vw'}}>
+        <NavLink to='/projects'>
+          Projects
+        </NavLink>
+        <h5>Express</h5>
+        <h5>Sequelize</h5>
+        <h5>React</h5>
+        <h5>Redux</h5>
+      </span>
       <div>
         {sessionLinks}
       </div>
