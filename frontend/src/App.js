@@ -7,6 +7,7 @@ import SignupFormPage from './components/SignupFormPage';
 import Navigation from './components/Navigation';
 import ProjectPage from './components/ProjectPage';
 import ProjectForm from './components/ProjectForm';
+import SingleProject from './components/SingleProject';
 
 function App() {
   const dispatch = useDispatch()
@@ -27,11 +28,17 @@ function App() {
         <Route path='/signup'>
           <SignupFormPage />
         </Route>
-        <Route path='/' exact>
-          <ProjectPage />
+        <Route path='projects/:projectId'>
+          <SingleProject />
         </Route>
         <Route path='/projects/new'>
           <ProjectForm />
+        </Route>
+        <Route path='/' exact>
+          <ProjectPage />
+        </Route>
+        <Route>
+          <h2>We couldn't find the page you're looking for. :/</h2>
         </Route>
       </Switch>
     </main>

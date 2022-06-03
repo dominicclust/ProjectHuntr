@@ -29,10 +29,6 @@ module.exports = {
         type: Sequelize.STRING,
         defaultValue: 'https://www.thoughtco.com/thmb/kvjQ3GOItmnivEhr0Hpx2X27h_A=/768x0/filters:no_upscale():max_bytes(150000):strip_icc()/Lol_interrobang-58bcad2e3df78c353c52e72c.png'
       },
-      avgScore: {
-        type: Sequelize.DECIMAL(3, 2),
-        defaultValue: 2.50
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

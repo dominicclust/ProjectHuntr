@@ -25,19 +25,24 @@ router.get('/', asyncHandler(async (req, res) => {
 router.get('/:reviewId', asyncHandler(async (req, res) => {
     const { reviewId } = req.params
     const review = await Review.findByPk(reviewId)
-    return res.json({...review})
+    return res.json(review)
 }))
 
 router.post('/', requireAuth, validateReview, asyncHandler(async (req, res) => {
     const {reviewerId, review, projectId, rating} = req.body
     const newReview = await Review.create({reviewerId, review, projectId, rating});
-    return res.json({...newReview})
+    return res.json(newReview)
 }))
 
 router.put('/:reviewId', requireAuth, validateReview, asyncHandler(async (req, res) => {
     const {reviewerId, review, projectId, rating} = req.body;
     const updatedReview = await Review.update({review, rating}, { where: {reviewerId, projectId}})
-    return res.json({...updatedReview})
+    return res.json(updatedReview)
+}))
+
+router.delete('/:reviewId', requireAuth, asyncHandler (async (req, res) => {
+    const {reviewId} = req.params
+    return await Review.destroy(reviewId)
 }))
 
 module.exports = router;
