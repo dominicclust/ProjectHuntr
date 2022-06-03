@@ -1,10 +1,11 @@
 import React from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
 
-function Navigation({ isLoaded, user }){
-
+function Navigation({ isLoaded,}){
+  const user = useSelector(state => state.session.user)
   let sessionLinks;
   if (user) {
     sessionLinks = (
@@ -29,7 +30,7 @@ function Navigation({ isLoaded, user }){
       <div>
         <NavLink exact to="/">
           <h3 className='title' >Project</h3>
-          <i class="fa-solid fa-circle-h" style={{color: '#20AA22', width: '3vw', height: '3vw'}}></i>
+          <i className="fa-solid fa-circle-h" style={{color: '#20AA22', width: '3vw', height: '3vw'}}></i>
           <h3 className='title'>untr</h3>
         </NavLink>
       </div>

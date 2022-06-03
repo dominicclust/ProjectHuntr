@@ -1,16 +1,19 @@
 import React, {useState, useEffect} from 'react'
 import { signup } from '../../store/session'
-import { Redirect } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useHistory, Redirect } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import './SignupFormPage.css'
 
 const SignupFormPage = () => {
+    const history = useHistory();
     const dispatch = useDispatch();
+    const user = useSelector(state => state.session.user)
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirm, setConfirm] = useState('')
     const [valErrors, setValErrors] = useState([])
+
 
     useEffect(() => {
         const errors = []
@@ -19,14 +22,19 @@ const SignupFormPage = () => {
         if (!email.includes('@')) errors.push('Please use a valid email address.')
         if (password.length < 8) errors.push('Password must be longer than 7 characters.')
         setValErrors(errors)
-    }, [username, email, password, valErrors])
+    }, [username, email, password])
+
+    if (user) return <Redirect to='/'/>
 
     const handleSubmit = (e) => {
         e.preventDefault()
         if (password !== confirm) setValErrors('Password and Confirm Password must match')
         if (!valErrors.length) {
-            dispatch(signup({ username, email, password }))
-            return <Redirect to='/' />
+            return dispatch(signup({ username, email, password }))
+            .catch(async (res) => {
+                const data = await res.json();
+                if (data && data.errors) setValErrors(data.errors);
+              });
         }
     }
 
@@ -34,7 +42,15 @@ const SignupFormPage = () => {
         <div id='backdrop'>
             <div id='signup-form'>
                 <form onSubmit={handleSubmit} >
-                    <h2>Ready to join the hunt?</h2>
+                    <div id='tagline'>
+                        <div>
+                            <h1>Ready to join the</h1>
+                        </div>
+                        <div>
+                            <i class="fa-solid fa-circle-h" style={{color: '#20AA22', width: '3vw', height: '3vw'}}></i>
+                            <h1>unt?</h1>
+                        </div>
+                    </div>
                     <h4>Fill out the form below, and you'll have access to all of ProjectHuntr's features!</h4>
                     <ul>
                         {valErrors.length > 0 && valErrors.map((error, i) => <li key={i}>{error}</li>)}
@@ -83,8 +99,9 @@ const SignupFormPage = () => {
                                 onChange={(e) => setConfirm(e.target.value)}
                             />
                     </div>
-                    <div>
-                        <button disabled={valErrors.length !== 0}>Sign Up</button>
+                    <div id='buttons'>
+                        <button type='button' onClick={() => history.push('/')}>Cancel</button>
+                        <button id='submit' disabled={valErrors.length !== 0} type='submit'>Sign Up</button>
                     </div>
                 </form>
             </div>

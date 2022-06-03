@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { restoreUser } from './store/session'
 import LoginForm from './components/LoginForm';
 import SignupFormPage from './components/SignupFormPage';
@@ -14,12 +14,11 @@ function App() {
   useEffect(() => {
     dispatch(restoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
-  const user = useSelector(state => state.session.user)
 
   return (
     <main>
       <div className='navigation'>
-        <Navigation isLoaded={isLoaded} user={user}/>
+        <Navigation isLoaded={isLoaded}/>
       </div>
       <Switch>
         <Route path='/login'>

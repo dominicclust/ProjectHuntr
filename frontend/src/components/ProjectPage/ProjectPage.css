@@ -1,18 +1,17 @@
 .container {
-    margin-left: 10vw;
-    margin-top: 5.5vw;
     position: absolute;
-    top: 5vw;
-    right: 0;
     left: 0;
-    bottom: 0;
-    z-index: -1;
+    right: 0;
+    top: 5vw;
+    background-color: #20AA22;
+    z-index: -3;
 }
 .project {
     display: flex;
     align-items: center;
-    width: 100%;
-    margin: 2vw 0 2vw 0;
+    margin: 2vw;
+    padding-bottom: 2vw;
+    border-bottom: 2px solid #AAAAAA
 }
 
 .logo-thumb > img {
@@ -20,13 +19,19 @@
     height: 10vw;
     padding: 2vw;
 }
+.project-details {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: space-between;
+}
 .main-details {
     display: flex;
     justify-content: space-between;
+    padding: 0 0 0 2vw;
     align-items: center;
 }
-.project-details {
-    display: inline-block;
-    padding: 1vw;
-    align-items: center;
+.description {
+    padding: 0 0 0 6px;
 }

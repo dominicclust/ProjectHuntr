@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import { login } from '../../store/session'
-import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, Redirect } from 'react-router-dom';
 import './LoginForm.css'
 
 function LoginForm() {
   const history = useHistory();
   const dispatch = useDispatch();
+  const user = useSelector(state => state.session.user)
   const [credential, setCredential] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState([]);
@@ -18,10 +19,11 @@ function LoginForm() {
     setErrors(valErrors)
   }, [credential, password])
 
+  if (user) return <Redirect to='/' />
+
   const handleSubmit = (e) => {
     e.preventDefault();
     return dispatch(login({ credential, password }))
-      .then(() => history.push('/'))
       .catch(async (res) => {
         const data = await res.json();
         if (data && data.errors) setErrors(data.errors);
@@ -33,9 +35,9 @@ function LoginForm() {
       <div id='login-form'>
         <form onSubmit={handleSubmit}>
           <div id='message'>
-            <h2>Sign in. The </h2>
+            <h1>Sign in. The </h1>
             <i className='fa-solid fa-circle-h' style={{color: 'green', width: '3vw', height: '3vw'}}></i>
-            <h2>unt awaits</h2>
+            <h1>unt awaits</h1>
           </div>
           <ul>
             {errors.map((error, idx) => <li key={idx}>{error}</li>)}
@@ -64,7 +66,11 @@ function LoginForm() {
                 required
               />
           </div>
-          <button type="submit" disabled={!!errors.length}>Log In</button>
+          <div id='buttons'>
+            <button id='cancel' type='button' onClick={()=> history.push('/')}>Cancel</button>
+            <button id='submit' type="submit" disabled={!!errors.length}>Log In</button>
+
+          </div>
         </form>
       </div>
     </div>
