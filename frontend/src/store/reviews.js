@@ -69,6 +69,7 @@ export const deleteReview = (reviewId) => async dispatch => {
         method: 'DELETE'
     })
     await dispatch(removeReview(reviewId))
+    return response;
 }
 
 const reviewReducer = (state = {}, action) => {

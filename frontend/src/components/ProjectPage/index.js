@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useRouteMatch } from 'react-router-dom';
-import { getProjects } from "../../store/project";
+import { deleteProject, getProjects } from "../../store/project";
 import './ProjectPage.css'
 
 const ProjectPage = () => {
@@ -9,8 +9,9 @@ const ProjectPage = () => {
     const dispatch = useDispatch();
     const projects = useSelector(state => state.projects)
     const projectArray = Object.values(projects).reverse();
+    const owner = useSelector(state => state.projects.ownerId === state.session.user.id)
 
-    
+
     useEffect(() => {
         dispatch(getProjects())
     }, [dispatch])
@@ -34,6 +35,12 @@ const ProjectPage = () => {
                             <div className='description'>
                                 <h5>{project?.description}</h5>
                             </div>
+                            {owner &&
+                                <div>
+                                    <button type='button' onClick={() => history.push(`/projects/${project.id}/edit`)}>Edit</button>
+                                    <button type='button' onClick={() => dispatch(deleteProject(project.id))} >Delete</button>
+                                </div>
+                            }
                         </div>
                     </div>
                 )

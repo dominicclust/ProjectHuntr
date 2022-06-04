@@ -47,7 +47,7 @@ const SignupFormPage = () => {
                             <h1>Ready to join the</h1>
                         </div>
                         <div>
-                            <i class="fa-solid fa-circle-h" style={{color: '#20AA22', width: '3vw', height: '3vw'}}></i>
+                            <i className="fa-solid fa-circle-h" style={{color: '#20AA22', width: '3vw', height: '3vw'}}></i>
                             <h1>unt?</h1>
                         </div>
                     </div>

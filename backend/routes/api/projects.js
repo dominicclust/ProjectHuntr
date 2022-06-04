@@ -19,8 +19,10 @@ const validateProject = [
     check('imageUrl')
         .isURL()
         .withMessage('Provide a valid URL for your project image.'),
-    handleValidationErrors
-];
+        handleValidationErrors
+    ];
+
+
 
 router.get('/', asyncHandler(async (req, res) => {
     const projects = await Project.findAll({include: [User, Review], order: [['id', 'DESC']]})
@@ -49,4 +51,5 @@ router.delete('/:projectId', asyncHandler(async (req, res) => {
     const {projectId} = req.params
     return await Project.destroy(projectId)
 }))
+
 module.exports = router;

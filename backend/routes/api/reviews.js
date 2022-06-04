@@ -18,28 +18,21 @@ const validateReview = [
 ]
 
 router.get('/', asyncHandler(async (req, res) => {
-    const reviews = await Review.findAll({include: [User, Project]})
+    const review = await Review.findByPk(reviewId)
     return res.json([...reviews])
 }))
 
-router.get('/:reviewId', asyncHandler(async (req, res) => {
-    const { reviewId } = req.params
-    const review = await Review.findByPk(reviewId)
-    return res.json(review)
-}))
-
-router.post('/', requireAuth, validateReview, asyncHandler(async (req, res) => {
-    const {reviewerId, review, projectId, rating} = req.body
-    const newReview = await Review.create({reviewerId, review, projectId, rating});
+router.post('/:projectId', requireAuth, validateReview, asyncHandler (async (req, res) => {
+    const {reviewerId, review, projectId, rating} = req.body;
+    const newReview = await Review.create({reviewerId, review, projectId, rating})
     return res.json(newReview)
 }))
-
-router.put('/:reviewId', requireAuth, validateReview, asyncHandler(async (req, res) => {
-    const {reviewerId, review, projectId, rating} = req.body;
-    const updatedReview = await Review.update({review, rating}, { where: {reviewerId, projectId}})
+router.put('/:projectId/reviews/:reviewId', requireAuth, validateReview, asyncHandler (async (req, res) => {
+    const { reviewId } = req.params;
+    const { reviewerId, review, projectId, rating } = req.body
+    const updatedReview = await Review.update({reviewerId, review, projectId, rating}, { where: {id: parseInt(reviewId)}})
     return res.json(updatedReview)
 }))
-
 router.delete('/:reviewId', requireAuth, asyncHandler (async (req, res) => {
     const {reviewId} = req.params
     return await Review.destroy(reviewId)
