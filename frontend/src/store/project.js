@@ -37,13 +37,12 @@ export const getProjects = () => async dispatch => {
     const response = await csrfFetch('/api/projects')
     const projects = await response.json();
     dispatch(loadProjects(projects));
-    return response;
-}
+};
 
 export const postProject = (project) => async dispatch => {
     const response = await csrfFetch('/api/projects', {
         method: 'POST',
-        body: JSON.stringify({...project})
+        body: JSON.stringify(project)
     });
     const data = await response.json();
     dispatch(addProject(data.project));
@@ -57,7 +56,7 @@ export const putProject = (project) => async dispatch => {
         body: JSON.stringify({id, title, imageUrl, description})
     })
     const data = await response.json();
-    dispatch(editProject(data.id, ...data))
+    dispatch(editProject(id, data.project))
     return response;
 }
 
@@ -74,8 +73,9 @@ const projectReducer = (state = {}, action) => {
     switch (action.type) {
         case LOAD_PROJECTS:
             newState = {...state}
-            action.projects.map(project => {
-                return newState[project.id] = project
+            const projects = Object.values(action.projects)
+            projects.forEach(project => {
+                newState[project.id] = project
             })
             return newState;
         case ADD_PROJECT:

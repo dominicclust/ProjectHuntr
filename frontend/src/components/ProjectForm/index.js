@@ -25,11 +25,11 @@ const ProjectForm = () => {
         setValErrors(errors)
     }, [title, imageUrl, description])
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const ownerId = parseInt(user.id)
         const newProject = {title, ownerId, imageUrl, description};
-        return dispatch(postProject(newProject)).then(() => history.push('/'))
+        await dispatch(postProject(newProject)).then(() => history.push('/'))
     }
     return (
         <div id='backdrop'>

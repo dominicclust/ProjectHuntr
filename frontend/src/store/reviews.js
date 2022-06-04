@@ -6,7 +6,7 @@ const EDIT_REVIEW = '/reviews/editReview'
 const REMOVE_REVIEW = '/reviews/removeReview'
 
 
-const loadReviews = () => {
+const loadReviews = (reviews) => {
     return {
         type: LOAD_REVIEWS,
         reviews
@@ -96,3 +96,4 @@ const reviewReducer = (state = {}, action) => {
             return state;
     }
 }
+export default reviewReducer;

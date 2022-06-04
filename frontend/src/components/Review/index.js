@@ -1,10 +1,9 @@
+
 const Review = () => {
     return (
-        <div id='backdrop'>
-            <div id='review-form'>
-                <form>
+        <div id='review-div'>
+            <div id='rating'>
 
-                </form>
 
             </div>
         </div>

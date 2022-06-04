@@ -15,8 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       allowNull: false
     },
-    imageUrl: DataTypes.STRING,
-    avgScore: DataTypes.DECIMAL(3, 2)
+    imageUrl: DataTypes.STRING
   }, {});
   Project.associate = function(models) {
     Project.belongsTo(models.User, { foreignKey: 'ownerId'})

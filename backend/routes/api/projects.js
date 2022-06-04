@@ -23,7 +23,7 @@ const validateProject = [
 ];
 
 router.get('/', asyncHandler(async (req, res) => {
-    const projects = await Project.findAll({include: [User, Review], order: [['createdAt', 'ASC']]})
+    const projects = await Project.findAll({include: [User, Review], order: [['id', 'DESC']]})
     return res.json([...projects])
 }))
 

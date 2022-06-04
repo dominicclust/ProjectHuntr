@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, useParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 import { restoreUser } from './store/session'
 import LoginForm from './components/LoginForm';
@@ -10,6 +10,7 @@ import ProjectForm from './components/ProjectForm';
 import SingleProject from './components/SingleProject';
 
 function App() {
+  const {projectId} = useParams();
   const dispatch = useDispatch()
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
@@ -29,7 +30,7 @@ function App() {
           <SignupFormPage />
         </Route>
         <Route path='projects/:projectId'>
-          <SingleProject />
+          <SingleProject projectId={projectId}/>
         </Route>
         <Route path='/projects/new'>
           <ProjectForm />
