@@ -22,12 +22,12 @@ router.get('/', asyncHandler(async (req, res) => {
     return res.json([...reviews])
 }))
 
-router.post('/:projectId', requireAuth, validateReview, asyncHandler (async (req, res) => {
+router.post('/', requireAuth, validateReview, asyncHandler (async (req, res) => {
     const {reviewerId, review, projectId, rating} = req.body;
     const newReview = await Review.create({reviewerId, review, projectId, rating})
     return res.json(newReview)
 }))
-router.put('/:projectId/reviews/:reviewId', requireAuth, validateReview, asyncHandler (async (req, res) => {
+router.put('/:reviewId', requireAuth, validateReview, asyncHandler (async (req, res) => {
     const { reviewId } = req.params;
     const { reviewerId, review, projectId, rating } = req.body
     const updatedReview = await Review.update({reviewerId, review, projectId, rating}, { where: {id: parseInt(reviewId)}})

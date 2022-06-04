@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory, useRouteMatch } from 'react-router-dom';
+import { useHistory, Route, Link } from 'react-router-dom';
 import { deleteProject, getProjects } from "../../store/project";
 import './ProjectPage.css'
 
@@ -24,24 +24,30 @@ const ProjectPage = () => {
             {projectArray && projectArray.map((project, i) => {
                 return (
                     <div key={i} className='project' onClick={()=>history.push(`projects/${project.id}`)}>
-                        <div className='logo-thumb'>
-                            <img src={project?.imageUrl} alt={project?.title}/>
-                        </div>
-                        <div className='project-details'>
-                            <div className='main-details'>
-                                <h2>{project?.title}</h2>
-                                <h5>Submitted by {project?.User.username}</h5>
+                        <Link to={`/projects/${projectId}`}>
+                            <div className='logo-thumb'>
+                                <img src={project?.imageUrl} alt={project?.title}/>
                             </div>
-                            <div className='description'>
-                                <h5>{project?.description}</h5>
-                            </div>
-                            {owner &&
-                                <div>
-                                    <button type='button' onClick={() => history.push(`/projects/${project.id}/edit`)}>Edit</button>
-                                    <button type='button' onClick={() => dispatch(deleteProject(project.id))} >Delete</button>
+                            <div className='project-details'>
+                                <div className='main-details'>
+                                    <h2>{project?.title}</h2>
+                                    <h5>Submitted by {project?.User.username}</h5>
                                 </div>
-                            }
-                        </div>
+                                <div className='description'>
+                                    <h5>{project?.description}</h5>
+                                </div>
+                                {owner &&
+                                    <div>
+                                        <button type='button' onClick={() => history.push(`/projects/${project.id}/edit`)}>
+                                            <Route path='/projects/:projectId/edit'>
+                                                Edit
+                                            </Route>
+                                        </button>
+                                        <button type='button' onClick={() => dispatch(deleteProject(project.id))} >Delete</button>
+                                    </div>
+                                }
+                            </div>
+                        </Link>
                     </div>
                 )
             })}

@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { putProject } from '../../store/project';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import './ProjectEdit.css'
 
 const ProjectEdit = () => {
+    const { projectId } = useParams()
     const history = useHistory();
     const user = useSelector(state => state.session.user);
-    const project = useSelector(state => state.projects.)
-    const [title, setTitle] = useState('');
-    const [imageUrl, setImageUrl] = useState('');
-    const [description, setDescription] = useState('');
+    const project = useSelector(state => state.project.id === parseInt(projectId))
+    const [title, setTitle] = useState(project.title);
+    const [imageUrl, setImageUrl] = useState(project.imageUrl);
+    const [description, setDescription] = useState(project.description);
     const [valErrors, setValErrors] = useState([])
     const dispatch = useDispatch();
+
     useEffect(() => {
         const errors = [];
 
@@ -34,7 +36,7 @@ const ProjectEdit = () => {
                 <form onSubmit={handleSubmit}>
                     <div id='tagline'>
                         <div>
-                            <h1>Keep your project up to date, and get </h1>
+                            <h1>Keep your project up to date, get </h1>
                         </div>
                         <div>
                             <i className="fa-solid fa-circle-h" style={{color: '#20AA22', width: '3vw', height: '3vw'}}></i>
@@ -48,7 +50,7 @@ const ProjectEdit = () => {
                         </h4>
                     </div>
                     <div id='errors'>
-                        {valErrors && valErrors.map((error, i) => {
+                        {valErrors && valErrors?.map((error, i) => {
                             return <span key={i}>- {error}</span>
                         })}
                     </div>
