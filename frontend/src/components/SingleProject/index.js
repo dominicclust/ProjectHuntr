@@ -4,13 +4,12 @@ import { useSelector, useDispatch } from 'react-redux'
 import { deleteProject } from '../../store/projects'
 import ReviewForm from '../ReviewForm';
 
-const SingleProject = ({projectId}) => {
+const SingleProject = ({project}) => {
     const dispatch = useDispatch();
     const history = useHistory();
-    const project = useSelector(state => Object.values(state.projects).find(project => project.id === parseInt(projectId)))
     const user = useSelector(state => state.session.user)
     const [showForm, setShowForm] = useState(false)
-    const reviews = useSelector(state => Object.values(state.reviews).filter(review => review.projectId == projectId))
+    const reviews = useSelector(state => Object.values(state.reviews).filter(review => review.projectId == project.id))
 
     const reviewSpan = () => {
         if (user.id === project.ownerId) {

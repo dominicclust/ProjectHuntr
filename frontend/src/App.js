@@ -3,6 +3,7 @@ import { Route, Switch, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { restoreUser } from './store/session'
 import { getProjects } from './store/projects';
+import { getReviews } from './store/reviews'
 import LoginForm from './components/LoginForm';
 import SignupFormPage from './components/SignupFormPage';
 import Navigation from './components/Navigation';
@@ -15,6 +16,7 @@ function App() {
   const {projectId} = useParams();
   const dispatch = useDispatch()
   const projects = useSelector(state => state.projects)
+
   const [isLoaded, setIsLoaded] = useState(false);
   const project = projects[projectId]
 
@@ -25,6 +27,11 @@ function App() {
   useEffect(() => {
     dispatch(getProjects())
   }, [dispatch])
+
+  useEffect(() => {
+    dispatch(getReviews())
+  }, [dispatch])
+
 
   return (
     <main>
@@ -38,11 +45,11 @@ function App() {
         <Route path='/signup'>
           <SignupFormPage />
         </Route>
-        <Route path='/projects/:projectId/edit'>
-          <ProjectEdit id={projectId} project={project}/>
+        <Route path='/projects/:id/edit'>
+          <ProjectEdit />
         </Route>
-        <Route path='projects/:projectId'>
-          <SingleProject projectId={projectId}/>
+        <Route path='projects/:id'>
+          <SingleProject project={project}/>
         </Route>
         <Route path='/projects/new'>
           <ProjectForm />

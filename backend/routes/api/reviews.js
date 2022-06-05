@@ -18,7 +18,7 @@ const validateReview = [
 ]
 
 router.get('/', asyncHandler(async (req, res) => {
-    const review = await Review.findByPk(reviewId)
+    const reviews = await Review.findAll({include: [User, Project]})
     return res.json([...reviews])
 }))
 
