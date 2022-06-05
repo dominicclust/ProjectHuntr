@@ -8,6 +8,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      reviewerId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {model: 'Users'}
+      },
       review: {
         type: Sequelize.TEXT,
         allowNull: false
@@ -16,11 +21,6 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {model: 'Projects'}
-      },
-      reviewerId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {model: 'Users'}
       },
       rating: {
         type: Sequelize.INTEGER

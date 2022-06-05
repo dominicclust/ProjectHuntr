@@ -1,15 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import './index.css';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import { csrfFetch, restoreCSRF } from './store/csrf'
 
-import './index.css';
 import App from './App';
-import configureStore from './store';
 
+import { csrfFetch, restoreCSRF } from './store/csrf'
+import configureStore from './store';
 import * as sessionActions from './store/session'
-import * as projectActions from './store/project'
+import * as projectActions from './store/projects'
+import * as reviewActions from './store/reviews'
 
 const store = configureStore();
 

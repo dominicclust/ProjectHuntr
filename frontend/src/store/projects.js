@@ -33,21 +33,21 @@ const destroyProject = (id) => {
         id
     }
 }
+
 export const getProjects = () => async dispatch => {
     const response = await csrfFetch('/api/projects')
     const projects = await response.json();
     dispatch(loadProjects(projects));
-    return response;
-}
+    return projects;
+};
 
 export const postProject = (project) => async dispatch => {
     const response = await csrfFetch('/api/projects', {
         method: 'POST',
-        body: JSON.stringify({...project})
+        body: JSON.stringify(project)
     });
-    const data = await response.json();
-    dispatch(addProject(data.project));
-    return response;
+    const newProject = await response.json();
+    return await dispatch(addProject(newProject));
 }
 
 export const putProject = (project) => async dispatch => {
@@ -56,41 +56,40 @@ export const putProject = (project) => async dispatch => {
         method: 'PUT',
         body: JSON.stringify({id, title, imageUrl, description})
     })
-    const data = await response.json();
-    dispatch(editProject(data.id, ...data))
-    return response;
+    const updatedProject = await response.json();
+    dispatch(editProject(id, updatedProject))
+
 }
 
 export const deleteProject = (id) => async dispatch => {
-    const response = await csrfFetch('/api/projects', {
+    const response = await csrfFetch(`/api/projects/${id}`, {
         method: 'DELETE'
-    });
-    dispatch(destroyProject(id));
+    })
+    dispatch(destroyProject(id))
     return response;
 }
 
-const initialState = { projects: {} }
-
-const projectReducer = (state = initialState, action) => {
+const projectReducer = (state = {}, action) => {
     let newState;
     switch (action.type) {
         case LOAD_PROJECTS:
             newState = {...state}
-            action.projects.map(project => {
-                newState.projects[project.id] = project
+            const projects = Object.values(action.projects)
+            projects.forEach(project => {
+                newState[project.id] = {...project}
             })
             return newState;
         case ADD_PROJECT:
             newState = {...state}
-            newState.projects[action.project.id] = action.project
+            newState[action.project] = action.project
             return newState;
         case EDIT_PROJECT:
             newState = {...state,
-                        ...[action.project.id] = action.project}
+                        [action.project.id]: action.project}
             return newState;
         case DELETE_PROJECT:
             newState = {...state}
-            delete newState.projects[action.id]
+            delete newState[action.id];
             return newState;
         default:
             return state;

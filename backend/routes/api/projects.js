@@ -19,13 +19,16 @@ const validateProject = [
     check('imageUrl')
         .isURL()
         .withMessage('Provide a valid URL for your project image.'),
-    handleValidationErrors
-];
+        handleValidationErrors
+    ];
+
+
 
 router.get('/', asyncHandler(async (req, res) => {
-    const projects = await Project.findAll({include: [User, Review]})
+    const projects = await Project.findAll({include: [User, Review], order: [['id', 'DESC']]})
     return res.json([...projects])
 }))
+
 router.get('/:projectId', asyncHandler(async (req, res) => {
     const { projectId } = req.params
     const project = await Project.findByPk(projectId)
@@ -35,17 +38,18 @@ router.get('/:projectId', asyncHandler(async (req, res) => {
 router.post('/', requireAuth, validateProject, asyncHandler(async (req, res) => {
     const {title, ownerId, description, imageUrl} = req.body;
     const project = await Project.create({title, ownerId, description, imageUrl})
-    return res.json({...project})
+    return res.json(project)
 }))
 
 router.put('/:projectId', requireAuth, validateProject, asyncHandler(async (req, res) => {
     const { id, title, ownerId, description, imageUrl } = req.body;
     const updatedProject = await Project.update({title, ownerId, description, imageUrl}, {where: {id}})
-    return res.json({...updatedProject})
+    return res.json(updatedProject)
 }))
 
-router.delete('/:projectId', asyncHandler(async (req, res) => {
-    const {id} = req.params
-    return await Project.destroy(id)
+router.delete('/:projectId', requireAuth, asyncHandler(async (req, res) => {
+    const {projectId} = req.params
+    return await Project.destroy({where: {id: projectId}})
 }))
+
 module.exports = router;

@@ -1,14 +1,26 @@
-nav {
+nav{
     display: flex;
-    position: absolute;
+    position: fixed;
     top: 0px;
     left: 0px;
     right: 0px;
+    box-sizing: border-box;
     padding: 10px 10px;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 2px solid gray;
+    border-bottom: 2px solid #AAAAAA;
     flex-direction: row;
+
+}
+nav > *,
+nav > * > *,
+nav > * > * > * {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    background-color: #222222;
 }
 
 .user {
@@ -18,4 +30,20 @@ nav {
 .title {
     font-size: 24px;
     font-weight: bold;
+}
+span {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+span > * {
+    text-decoration: none;
+    color: white;
+    background-color: #222222;
+}
+h5 {
+    margin-left: 2vw;
+}
+.sessionLink {
+    margin: 1vw;
 }

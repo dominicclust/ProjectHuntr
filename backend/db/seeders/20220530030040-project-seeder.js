@@ -4,7 +4,7 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('Projects', [
       {title: 'Git R Done', ownerId: 23, description: 'Git R Done is a full stack application that allows users to keep track of all their daily and future tasks, helping them organize their workflow and increase productivity. Logged in users can create a list of tasks, give each task a priority, a due date, and add notes to them.'},
-      {title: 'Zuora', ownerId: 5, description: 'A clone of "Quora" created with an Express backend and a Pug frontend.'},
+      {title: 'Project Zuora', ownerId: 5, description: 'Project Zuora is a Quora clone for practice with Express, Pug, CSS, and front end vanilla DOM manipulation. The full stack app will have functionality to ask a question that other users can answer. Then comments can be made on those answers.'},
       {title: 'Recall', ownerId: 16, description: 'A clone of "Remember the Milk" created with an Express backend and a Pug frontend.'},
       {title: 'MusicHunt', ownerId: 26, description: 'Music Hunt is a web application for sharing and discovering music albums. It was inspired by Product Hunt. The app will have complete functionaility with the ability to search and view albums. Users can leave reviews on albums.' },
       {title: 'SnackOverfleaux', ownerId: 40, description: 'Think "Stack Overflow", except instead of asking and answering questions about code, users can satisfy their literal hunger for knowledge. Our recipe was simple: one Express backend, one Pug frontend, whip in some DOM manipulation, sprinkle with CSS, and serve.'},
