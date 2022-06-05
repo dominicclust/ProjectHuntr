@@ -1,38 +1,41 @@
 import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { deleteProject } from '../../store/projects'
+import { deleteProject, getProjects } from '../../store/projects'
 import ReviewForm from '../ReviewForm';
 import './SingleProject.css'
 
-const SingleProject = ({project}) => {
+const SingleProject = () => {
+    const {projectId} = useParams()
+    const project = useSelector(state=> Object.values(state.projects).find(project => project.id == projectId))
     const dispatch = useDispatch();
     const history = useHistory();
     const user = useSelector(state => state.session.user)
     const [showForm, setShowForm] = useState(false)
-    const reviews = useSelector(state => Object.values(state.reviews).filter(review => review.projectId === project.id))
+    const reviews = useSelector(state => Object.values(state.reviews).filter(review => review.projectId == projectId))
 
     const deleteClick = async(e) => {
         e.preventDefault()
         window.alert('Are you sure? This will take your project out of the hunt, which may make some of our hunters sad. If you are okay with making our hunters sad, click OK.')
-        return await dispatch(deleteProject(project.id))
-        .then(history.push('/'))
+        return await dispatch(deleteProject(projectId))
+        .then(() => history.replace('/'))
+        .then(() => dispatch(getProjects))
     }
 
-    const reviewSpan = () => {
-        if (user.id === project.ownerId) {
-            return (
+    const ReviewSpan = () => {
+        return (user.id === project.ownerId)
+        ?   (
                 <>
                     <span>
-                        <button type='button' onClick={history.push(`/projects/${project?.id}/edit`)}>Edit</button>
+                        <button type='button' onClick={history.push(`/projects/${projectId}/edit`)}>Edit</button>
                         <button type='button' onClick={deleteClick}>Delete</button>
                     </span>
                 </>
             )
-        } else return (
+        :   (
             <span style={{boxSizing: 'border-box'}} onClick={() => setShowForm(true)}>
                 {showForm
-                    ? <ReviewForm showForm={showForm}/>
+                    ? <ReviewForm setShowForm={setShowForm}/>
                     : <p>Want to leave a review for {project?.User.username}'s project? Click here</p>
                 }
             </span>
@@ -43,12 +46,10 @@ const SingleProject = ({project}) => {
             <div id='project'>
                 <img src={project?.imageUrl} alt={project?.title} />
                 <h1>{project?.title}</h1>
-                <div>
-                    {project?.description}
-                </div>
+                <p>{project?.description}</p>
             </div>
             <div id='reviews'>
-                {reviewSpan}
+                <ReviewSpan />
                 {reviews && reviews?.map(review => {
                     return (
                         <>

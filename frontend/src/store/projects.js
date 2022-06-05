@@ -33,12 +33,7 @@ const destroyProject = (id) => {
         id
     }
 }
-export const getOneProject = (id) => async dispatch => {
-    const response = await csrfFetch(`/api/projects/${id}`)
-    const project = await response.json();
-    dispatch(loadProjects(project))
-    return project;
-}
+
 export const getProjects = () => async dispatch => {
     const response = await csrfFetch('/api/projects')
     const projects = await response.json();
@@ -82,7 +77,7 @@ const projectReducer = (state = {}, action) => {
             newState = {...state}
             const projects = Object.values(action.projects)
             projects.forEach(project => {
-                newState[project.id] = {...project}
+                newState[project.id] = project
             })
             return newState;
         case ADD_PROJECT:
