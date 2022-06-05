@@ -1,6 +1,6 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import sessionReducer from './session';
-import projectReducer from './project';
+import projectReducer from './projects';
 import reviewReducer from './reviews'
 import thunk from 'redux-thunk';
 

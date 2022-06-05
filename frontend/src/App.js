@@ -1,21 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { Route, Switch, useParams } from 'react-router-dom'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { restoreUser } from './store/session'
+import { getProjects } from './store/projects';
 import LoginForm from './components/LoginForm';
 import SignupFormPage from './components/SignupFormPage';
 import Navigation from './components/Navigation';
 import ProjectPage from './components/ProjectPage';
 import ProjectForm from './components/ProjectForm';
+import ProjectEdit from './components/ProjectEdit'
 import SingleProject from './components/SingleProject';
 
 function App() {
   const {projectId} = useParams();
   const dispatch = useDispatch()
+  const projects = useSelector(state => state.projects)
   const [isLoaded, setIsLoaded] = useState(false);
+  const project = projects[projectId]
+
   useEffect(() => {
     dispatch(restoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getProjects())
+  }, [dispatch])
 
   return (
     <main>
@@ -28,6 +37,9 @@ function App() {
         </Route>
         <Route path='/signup'>
           <SignupFormPage />
+        </Route>
+        <Route path='/projects/:projectId/edit'>
+          <ProjectEdit id={projectId} project={project}/>
         </Route>
         <Route path='projects/:projectId'>
           <SingleProject projectId={projectId}/>

@@ -32,7 +32,7 @@ router.get('/', asyncHandler(async (req, res) => {
 router.get('/:projectId', asyncHandler(async (req, res) => {
     const { projectId } = req.params
     const project = await Project.findByPk(projectId)
-    return res.json(project)
+    return res.json({...project})
 }))
 
 router.post('/', requireAuth, validateProject, asyncHandler(async (req, res) => {
@@ -47,9 +47,9 @@ router.put('/:projectId', requireAuth, validateProject, asyncHandler(async (req,
     return res.json(updatedProject)
 }))
 
-router.delete('/:projectId', asyncHandler(async (req, res) => {
+router.delete('/:projectId', requireAuth, asyncHandler(async (req, res) => {
     const {projectId} = req.params
-    return await Project.destroy(projectId)
+    return await Project.destroy({where: {id: projectId}})
 }))
 
 module.exports = router;

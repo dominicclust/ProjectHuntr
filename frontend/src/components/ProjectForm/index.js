@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { postProject } from '../../store/project';
+import { postProject } from '../../store/projects';
 import { useHistory } from 'react-router-dom';
 import './ProjectForm.css'
 

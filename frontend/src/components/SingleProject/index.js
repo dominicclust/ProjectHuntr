@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { deleteProject } from '../../store/project'
+import { deleteProject } from '../../store/projects'
 import ReviewForm from '../ReviewForm';
 
 const SingleProject = ({projectId}) => {

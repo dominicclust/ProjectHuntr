@@ -40,20 +40,20 @@ const ReviewForm = ({showForm, setShowForm}) => {
                     </ul>
                     <label>Rate this project!</label>
                     <div value={rating} onChange={(e) => setRating(e.target.value)}>
-                        <div value={1}>
-                            <i className='fa-regular fa-star fa-med'></i>
+                        <div value={1} onClick={()=> setStars()}>
+                            <i className={rating >= 1 ? 'fa-solid fa-star fa-med' : 'fa-regular fa-star fa-med'}></i>
                         </div>
                         <div value={2}>
-                            <i className='fa-regular fa-star fa-med'></i>
+                            <i className={rating >= 2 ? 'fa-solid fa-star fa-med' : 'fa-regular fa-star fa-med'}></i>
                         </div>
                         <div value={3}>
-                            <i className='fa-regular fa-star fa-med'></i>
+                            <i className={rating >= 3 ? 'fa-solid fa-star fa-med' : 'fa-regular fa-star fa-med'}></i>
                         </div>
                         <div value={4}>
-                            <i className='fa-regular fa-star fa-med'></i>
+                            <i className={rating >= 4 ? 'fa-solid fa-star fa-med' : 'fa-regular fa-star fa-med'}></i>
                         </div>
                         <div value={5}>
-                            <i className='fa-regular fa-star fa-med'></i>
+                            <i className={rating === 5 ? 'fa-solid fa-star fa-med' : 'fa-regular fa-star fa-med'}></i>
                         </div>
                     </div>
                     <label>Leave a review!</label>

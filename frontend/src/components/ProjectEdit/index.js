@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { putProject } from '../../store/project';
+import { putProject } from '../../store/projects';
 import { useHistory, useParams } from 'react-router-dom';
 import './ProjectEdit.css'
 
@@ -8,9 +8,9 @@ const ProjectEdit = () => {
     const { projectId } = useParams()
     const history = useHistory();
     const user = useSelector(state => state.session.user);
-    const project = useSelector(state => state.project.id === parseInt(projectId))
+    const project = useSelector(state => Object.values(state.projects).find(project => project.id === parseInt(projectId)))
     const [title, setTitle] = useState(project.title);
-    const [imageUrl, setImageUrl] = useState(project.imageUrl);
+    const [imageUrl, setImageUrl] = useState(project.imageUrl || '');
     const [description, setDescription] = useState(project.description);
     const [valErrors, setValErrors] = useState([])
     const dispatch = useDispatch();
@@ -58,7 +58,6 @@ const ProjectEdit = () => {
                         <label>What's the title of your project?</label>
                         <input
                             type='text'
-                            placeholder='e.g. ProjectHuntr'
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
                         />
@@ -67,7 +66,6 @@ const ProjectEdit = () => {
                         <label>What's the URL for your project's logo?</label>
                         <input
                             type='text'
-                            placeholder='e.g. https://imgur.com/HAcpUDL (and shoutout to Imgur for the shortened URL!)'
                             value={imageUrl}
                             onChange={(e) => setImageUrl(e.target.value)}
                         />
@@ -75,7 +73,6 @@ const ProjectEdit = () => {
                     <div id='description'>
                         <label>Can you give us a description of your project?</label>
                         <textarea
-                            placeholder='Describe your project here. How does it work? What did you use to build it? What can it do? What should the world know about your creation? Go ahead! Brag a little!'
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
                         />
@@ -90,4 +87,4 @@ const ProjectEdit = () => {
     )
 }
 
-export default ProjectForm;
+export default ProjectEdit;

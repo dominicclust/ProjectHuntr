@@ -33,10 +33,12 @@ const destroyProject = (id) => {
         id
     }
 }
+
 export const getProjects = () => async dispatch => {
     const response = await csrfFetch('/api/projects')
     const projects = await response.json();
     dispatch(loadProjects(projects));
+    return projects;
 };
 
 export const postProject = (project) => async dispatch => {
@@ -44,9 +46,8 @@ export const postProject = (project) => async dispatch => {
         method: 'POST',
         body: JSON.stringify(project)
     });
-    const data = await response.json();
-    dispatch(addProject(data.project));
-    return response;
+    const newProject = await response.json();
+    return await dispatch(addProject(newProject));
 }
 
 export const putProject = (project) => async dispatch => {
@@ -55,16 +56,16 @@ export const putProject = (project) => async dispatch => {
         method: 'PUT',
         body: JSON.stringify({id, title, imageUrl, description})
     })
-    const data = await response.json();
-    dispatch(editProject(id, data.project))
-    return response;
+    const updatedProject = await response.json();
+    dispatch(editProject(id, updatedProject))
+
 }
 
 export const deleteProject = (id) => async dispatch => {
-    const response = await csrfFetch('/api/projects', {
+    const response = await csrfFetch(`/api/projects/${id}`, {
         method: 'DELETE'
-    });
-    dispatch(destroyProject(id));
+    })
+    dispatch(destroyProject(id))
     return response;
 }
 
@@ -75,12 +76,12 @@ const projectReducer = (state = {}, action) => {
             newState = {...state}
             const projects = Object.values(action.projects)
             projects.forEach(project => {
-                newState[project.id] = project
+                newState[project.id] = {...project}
             })
             return newState;
         case ADD_PROJECT:
             newState = {...state}
-            newState[action.project.id] = action.project
+            newState[action.project] = action.project
             return newState;
         case EDIT_PROJECT:
             newState = {...state,
@@ -88,7 +89,7 @@ const projectReducer = (state = {}, action) => {
             return newState;
         case DELETE_PROJECT:
             newState = {...state}
-            delete newState[action.id]
+            delete newState[action.id];
             return newState;
         default:
             return state;

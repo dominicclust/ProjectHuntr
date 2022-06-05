@@ -27,13 +27,13 @@ router.post('/', requireAuth, validateReview, asyncHandler (async (req, res) => 
     const newReview = await Review.create({reviewerId, review, projectId, rating})
     return res.json(newReview)
 }))
-router.put('/:reviewId', requireAuth, validateReview, asyncHandler (async (req, res) => {
+router.put('/:reviewId', validateReview, asyncHandler (async (req, res) => {
     const { reviewId } = req.params;
     const { reviewerId, review, projectId, rating } = req.body
     const updatedReview = await Review.update({reviewerId, review, projectId, rating}, { where: {id: parseInt(reviewId)}})
     return res.json(updatedReview)
 }))
-router.delete('/:reviewId', requireAuth, asyncHandler (async (req, res) => {
+router.delete('/:reviewId', asyncHandler (async (req, res) => {
     const {reviewId} = req.params
     return await Review.destroy(reviewId)
 }))
