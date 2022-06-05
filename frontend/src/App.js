@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Switch, useParams } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux';
+import { Route, Switch, useLocation } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux';
 import { restoreUser } from './store/session'
-import { getProjects } from './store/projects';
+import { getProjects, getOneProject } from './store/projects';
 import { getReviews } from './store/reviews'
 import LoginForm from './components/LoginForm';
 import SignupFormPage from './components/SignupFormPage';
@@ -13,24 +13,24 @@ import ProjectEdit from './components/ProjectEdit'
 import SingleProject from './components/SingleProject';
 
 function App() {
-  const {projectId} = useParams();
+
   const dispatch = useDispatch()
-  const projects = useSelector(state => state.projects)
-
+  const location = useLocation()
+  let projectId = '';
+  if (location.pathname !== '/' && typeof location.pathname.split('/')[2] === 'number') {
+    projectId = location.pathname.split('/')[2]
+  }
+  if (projectId !== '') projectId = parseInt(projectId)
   const [isLoaded, setIsLoaded] = useState(false);
-  const project = projects[projectId]
 
+  const projects = useSelector(state=>state.projects)
   useEffect(() => {
-    dispatch(restoreUser()).then(() => setIsLoaded(true));
-  }, [dispatch]);
+    dispatch(restoreUser())
+    .then(() => typeof projectId === 'string' ? dispatch(getProjects()) : dispatch(getOneProject(projectId)))
+    .then(() => dispatch(getReviews()))
+    .then(() => setIsLoaded(true));
+  }, [dispatch, isLoaded, projectId]);
 
-  useEffect(() => {
-    dispatch(getProjects())
-  }, [dispatch])
-
-  useEffect(() => {
-    dispatch(getReviews())
-  }, [dispatch])
 
 
   return (
@@ -39,23 +39,23 @@ function App() {
         <Navigation isLoaded={isLoaded}/>
       </div>
       <Switch>
+        <Route path='/' exact>
+          <ProjectPage setIsLoaded={setIsLoaded} />
+        </Route>
         <Route path='/login'>
           <LoginForm />
         </Route>
         <Route path='/signup'>
           <SignupFormPage />
         </Route>
-        <Route path='/projects/:id/edit'>
+        <Route path='/projects/:projectId/edit'>
           <ProjectEdit />
         </Route>
-        <Route path='projects/:id'>
-          <SingleProject project={project}/>
+        <Route path='projects/:projectId'>
+          <SingleProject project={projects[projectId]}/>
         </Route>
         <Route path='/projects/new'>
-          <ProjectForm />
-        </Route>
-        <Route path='/' exact>
-          <ProjectPage />
+          <ProjectForm setIsLoaded={setIsLoaded}/>
         </Route>
         <Route>
           <h2>We couldn't find the page you're looking for. :/</h2>

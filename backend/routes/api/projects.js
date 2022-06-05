@@ -16,9 +16,6 @@ const validateProject = [
     check('description')
         .exists({ checkFalsy: true })
         .withMessage('Please provide a brief description of your project.'),
-    check('imageUrl')
-        .isURL()
-        .withMessage('Provide a valid URL for your project image.'),
         handleValidationErrors
     ];
 
@@ -32,11 +29,12 @@ router.get('/', asyncHandler(async (req, res) => {
 router.get('/:projectId', asyncHandler(async (req, res) => {
     const { projectId } = req.params
     const project = await Project.findByPk(projectId)
-    return res.json({...project})
+    return res.json(project)
 }))
 
 router.post('/', requireAuth, validateProject, asyncHandler(async (req, res) => {
-    const {title, ownerId, description, imageUrl} = req.body;
+    let {title, ownerId, description, imageUrl} = req.body;
+    if (check('imageUrl').isURL() || imageUrl === '') imageUrl = 'https://www.thoughtco.com/thmb/kvjQ3GOItmnivEhr0Hpx2X27h_A=/768x0/filters:no_upscale():max_bytes(150000):strip_icc()/Lol_interrobang-58bcad2e3df78c353c52e72c.png'
     const project = await Project.create({title, ownerId, description, imageUrl})
     return res.json(project)
 }))

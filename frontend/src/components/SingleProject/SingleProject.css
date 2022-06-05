@@ -1,0 +1,15 @@
+#backdrop {
+    z-index: -3;
+    background-color: #20AA22;
+    position: absolute;
+    top: 6vw;
+    left: 0;
+    right: 0;
+
+}
+
+#project {
+    background-color: #404040;
+    color: white;
+
+}

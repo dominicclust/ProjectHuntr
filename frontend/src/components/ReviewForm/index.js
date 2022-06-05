@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom'
 import { postReview } from '../../store/reviews'
 import { useSelector, useDispatch } from 'react-redux'
 
-const ReviewForm = ({showForm, setShowForm}) => {
+const ReviewForm = ({setShowForm}) => {
     const history = useHistory();
     const dispatch = useDispatch();
     const user = useSelector(state => state.session.user)
@@ -27,16 +27,16 @@ const ReviewForm = ({showForm, setShowForm}) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         const newReview = {reviewerId, review, projectId, rating};
-        await dispatch(postReview(newReview)).then(() => setShowForm(false))
+        await dispatch(postReview(newReview))
+            .then(() => history.push(`/projects/${projectId}`))
     }
     return (
-        showForm && (
         <div id='backdrop'>
             <div id='review-form'>
                 <form onSubmit={handleSubmit}>
                     <ul>
                         {valErrors && valErrors.map((error, i) => {
-                            <li key={i}>{error}</li>
+                            return <li key={i}>{error}</li>
                         })}
                     </ul>
                     <label>Rate this project!</label>
@@ -69,7 +69,7 @@ const ReviewForm = ({showForm, setShowForm}) => {
                 </form>
             </div>
         </div>
-    ))
+    )
 }
 
 export default ReviewForm;
