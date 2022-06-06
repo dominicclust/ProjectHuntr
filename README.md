@@ -22,6 +22,10 @@
 * User login will persist until they log out or until the JWT token expires (after one week)
 * Users can log out securely and easily.
 
+### Database Structure
+* Database Diagram can be found at the link below:
+[DB-Diagram](/wiki/DB-Diagram)
+
 ### Getting Started
 
 Step 0: setup
