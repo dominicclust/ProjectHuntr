@@ -23,8 +23,8 @@
 * Users can log out securely and easily.
 
 ### Database Structure
-* Database Diagram can be found at the link below:
-[DB-Diagram](/wiki/DB-Diagram)
+* Database Diagram can be found at the following link: [DB-Diagram](../../wiki/DB-Diagram)
+![Diagram](https://camo.githubusercontent.com/650a0c3dbd164bc4468b801fd272c442b1f225363001bf603bcc0020a81f743c/68747470733a2f2f692e696d6775722e636f6d2f487370494541742e706e67)
 
 ### Getting Started
 
