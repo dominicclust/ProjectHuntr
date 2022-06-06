@@ -1,0 +1,24 @@
+.navigation > nav {
+    display: flex;
+    position: fixed;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    box-sizing: border-box;
+    padding: 1.2vw 1.2vw;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 0.2vw solid #AAAAAA;
+    flex-direction: row;
+}
+.under-navigation > * {
+    width: 100%;
+    position: absolute;
+    top: 6.5vw;
+    left: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+
+}

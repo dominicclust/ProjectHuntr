@@ -1,25 +1,24 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, Redirect, Link} from 'react-router-dom';
-import { getOneProject } from "../../store/projects";
 import { restoreUser } from '../../store/session';
 import { getReviews } from '../../store/reviews';
 import './ProjectPage.css'
 
-const ProjectPage = () => {
+const ProjectPage = ({projects}) => {
     const history = useHistory();
     const dispatch = useDispatch();
     const user = useSelector(state => state.session.user)
-    const projects = useSelector(state => Object.values(state.projects).reverse())
-    const ownedProjects = projects.filter(project => project.ownerId === user?.id)
+    const orderedProjects = Object.values(projects).reverse()
+    const ownedProjects = Object.values(projects).filter(project => project.ownerId === user?.id)
 
     const handleClick = (projectId) => async(e) => {
         e.preventDefault();
         await dispatch(restoreUser())
         .then(() => dispatch(getReviews()))
-        .then(() => history.replace(`/projects/${projectId}`))
+        .then(() => history.push(`/projects/${projectId}`))
     }
-    const projectMap = projects.map((project) => {
+    const projectMap = orderedProjects.map((project) => {
         let projectId = project.id
         return (
             <div key={projectId} id={`project${projectId}`} onClick={handleClick(projectId)} >
@@ -30,7 +29,7 @@ const ProjectPage = () => {
                     <div className='project-details'>
                         <div className='main-details'>
                             <h2>{project?.title}</h2>
-                            {ownedProjects.includes(projects[projects.indexOf(project)])
+                            {ownedProjects.includes(projects[projectId])
                             ?   <p>click to view your project's details and reviews</p>
                             :   <h5>Submitted by {project?.User?.username}</h5>
                             }

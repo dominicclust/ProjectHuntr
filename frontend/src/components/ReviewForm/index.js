@@ -1,21 +1,18 @@
 import React, {useState, useEffect} from 'react'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import { postReview } from '../../store/reviews'
 import { useSelector, useDispatch } from 'react-redux'
+import './ReviewForm.css'
 
-const ReviewForm = ({setShowForm}) => {
+const ReviewForm = ({project, setShowForm}) => {
+    const { projectId } = useParams()
     const history = useHistory();
     const dispatch = useDispatch();
     const user = useSelector(state => state.session.user)
-    const project = useSelector(state => Object.values(state.projects)
-        .find(project => project.id === parseInt(projectId)))
     const [review, setReview] = useState('')
     const [rating, setRating] = useState(0)
-    const [stars, setStars] = useState(0)
     const [valErrors, setValErrors] = useState([])
     const reviewerId = parseInt(user.id);
-    const projectId = parseInt(project.id);
-
 
     useEffect(() => {
         const errors = []
@@ -31,43 +28,34 @@ const ReviewForm = ({setShowForm}) => {
             .then(() => history.push(`/projects/${projectId}`))
     }
     return (
-        <div id='backdrop'>
-            <div id='review-form'>
-                <form onSubmit={handleSubmit}>
-                    <ul>
-                        {valErrors && valErrors.map((error, i) => {
-                            return <li key={i}>{error}</li>
-                        })}
-                    </ul>
-                    <label>Rate this project!</label>
-                    <div value={rating} onChange={() => setRating(stars)}>
-                        <div value={1} onClick={(e)=> setStars(e.target.value)}>
-                            <i className={stars >= 1 ? 'fa-solid fa-star fa-med' : 'fa-regular fa-star fa-med'}></i>
-                        </div>
-                        <div value={2} onClick={(e)=> setStars(e.target.value)}>
-                            <i className={stars >= 2 ? 'fa-solid fa-star fa-med' : 'fa-regular fa-star fa-med'}></i>
-                        </div>
-                        <div value={3} onClick={(e)=> setStars(e.target.value)}>
-                            <i className={stars >= 3 ? 'fa-solid fa-star fa-med' : 'fa-regular fa-star fa-med'}></i>
-                        </div>
-                        <div value={4} onClick={(e)=> setStars(e.target.value)}>
-                            <i className={stars >= 4 ? 'fa-solid fa-star fa-med' : 'fa-regular fa-star fa-med'}></i>
-                        </div>
-                        <div value={5} onClick={(e)=> setStars(e.target.value)}>
-                            <i className={stars === 5 ? 'fa-solid fa-star fa-med' : 'fa-regular fa-star fa-med'}></i>
-                        </div>
-                    </div>
-                    <label>Leave a review!</label>
+        <div id='review-form'>
+            <form onSubmit={handleSubmit}>
+                <ul>
+                    {valErrors && valErrors.map((error, i) => {
+                        return <li key={i}>{error}</li>
+                    })}
+                </ul>
+
+                <div>
+                    <label htmlFor='rating'>Rate this project!</label>
+                    <input type='number' value={rating} onChange={(e) => setRating(e.target.value)} />
+                </div>
+                <div>
+                    <label htmlFor='review'>Leave a review!</label>
                     <textarea
                         type='text'
+                        id='review'
+                        name='review'
                         value={review}
                         onChange={(e) => setReview(e.target.value)}
                         placeholder='Tell us what you think'
                     />
+                </div>
+                <div>
                     <button type='button' onClick={() => setShowForm(false)}>Cancel</button>
                     <button type='submit'>Submit</button>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     )
 }
