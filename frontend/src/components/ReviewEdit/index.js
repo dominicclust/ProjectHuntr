@@ -1,19 +1,20 @@
 import React, {useState, useEffect} from 'react'
-import { useHistory, useParams } from 'react-router-dom'
-import { postReview, getReviews } from '../../store/reviews'
+import { useHistory} from 'react-router-dom'
+import { putReview, getReviews } from '../../store/reviews'
 import { useSelector, useDispatch } from 'react-redux'
 
-
-const ReviewForm = () => {
-    const {projectId} = useParams();
+const ReviewEdit = () => {
     const history = useHistory();
+    const path = history.location.pathname
+    const reviewId = path.split('/')[4]
+    const oldReview = useSelector(state=> state.reviews[reviewId])
+    console.log(oldReview)
     const dispatch = useDispatch();
-    const user = useSelector(state => state.session.user)
-    const [review, setReview] = useState('')
-    const [rating, setRating] = useState()
+    const [review, setReview] = useState(oldReview.review)
+    const [rating, setRating] = useState(oldReview.rating)
     const [valErrors, setValErrors] = useState([])
-    const reviewerId = parseInt(user.id);
-
+    const reviewerId = oldReview.reviewerId;
+    const projectId = oldReview.projectId
     useEffect(() => {
         const errors = []
         if (!rating) errors.push('Rate this project on a scale of 1 (awful) to 5(awesome).')
@@ -24,9 +25,8 @@ const ReviewForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         setRating(parseInt(rating))
-        const newReview = {reviewerId, review, projectId, rating}
-        console.log(newReview);
-        return await dispatch(postReview(newReview))
+        const updatedReview = {reviewId, reviewerId, review, projectId, rating}
+        return await dispatch(putReview(updatedReview))
             .then(() => dispatch(getReviews()))
             .then(() => history.push(`/projects/${projectId}`))
     }
@@ -35,7 +35,7 @@ const ReviewForm = () => {
         <div id='form'>
             <form onSubmit={handleSubmit}>
                 <div id='message'>
-                    <i className='fa-solid fa-circle-h' style={{color: '#20AA22', height: '3vw', width: '3vw'}}></i>
+                    <i className='fa-solid fa-circle-h' style={{height: '3vw', width: '3vw', color: '#20AA22'}}></i>
                     <h1>ow did you like this project?</h1>
                 </div>
                 <ul>
@@ -66,7 +66,7 @@ const ReviewForm = () => {
                         name='review'
                         value={review}
                         onChange={(e) => setReview(e.target.value)}
-                        placeholder='Tell us what you think'
+                        placeholder={review.review}
                     />
                 </div>
                 <div id='buttons'>
@@ -78,4 +78,4 @@ const ReviewForm = () => {
     )
 }
 
-export default ReviewForm;
+export default ReviewEdit;

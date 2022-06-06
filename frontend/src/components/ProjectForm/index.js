@@ -12,34 +12,30 @@ const ProjectForm = () => {
     const [imageUrl, setImageUrl] = useState('');
     const [description, setDescription] = useState('');
     const [valErrors, setValErrors] = useState([])
-
-    const projectArray = Object.values(projects)
     const dispatch = useDispatch();
 
 
     useEffect(() => {
         const errors = [];
-
         if (title.length < 4 || title.length > 200) errors.push('Project title must be between 4 and 200 characters')
-        if (projectArray.find(project => project.title === title)) errors.push('The title of this project has already been taken')
+        if (Object.values(projects).find(project => project.title === title)) errors.push('The title of this project has already been taken')
         if (imageUrl.length > 255) errors.push('Project image URL must be shorter than 255 characters')
         if (!description.length) errors.push('Please provide a description of your project')
         setValErrors(errors)
-    }, [title, imageUrl, description])
+    }, [title, imageUrl, description, projects])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const ownerId = parseInt(user.id)
-        const newProject = {title, ownerId, imageUrl, description};
+        const newProject = {title, ownerId: user.id, imageUrl, description};
         return await dispatch(postProject(newProject))
         .then(() => dispatch(getProjects()))
         .then(() => history.push('/'))
     }
     return (
         <div id='backdrop'>
-            <div id='project-form'>
+            <div id='form'>
                 <form onSubmit={handleSubmit}>
-                    <div id='tagline'>
+                    <div id='message'>
                         <div>
                             <h1>Think your project is </h1>
                         </div>

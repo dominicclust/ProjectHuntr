@@ -27,10 +27,10 @@ const editProject = (id, project) => {
     }
 }
 
-const destroyProject = (id) => {
+const destroyProject = (projectId) => {
     return {
         type: DELETE_PROJECT,
-        id
+        projectId
     }
 }
 
@@ -52,30 +52,32 @@ export const postProject = (project) => async dispatch => {
 }
 
 export const putProject = (project) => async dispatch => {
-    const {id, title, imageUrl, description} = project;
-    const response = await csrfFetch('/api/projects', {
+    const {id, title, ownerId, imageUrl, description} = project;
+    const projectId = id
+    const response = await csrfFetch(`/api/projects/${project.id}`, {
         method: 'PUT',
-        body: JSON.stringify({id, title, imageUrl, description})
+        body: JSON.stringify({id: projectId, title, ownerId, imageUrl, description})
     })
     const updatedProject = await response.json();
-    dispatch(editProject(id, updatedProject))
-
+    await dispatch(editProject(id, updatedProject))
+    return updatedProject
 }
 
-export const deleteProject = (id) => async dispatch => {
-    const response = await csrfFetch(`/api/projects/${id}`, {
+export const deleteProject = (projectId) => async dispatch => {
+    const response = await csrfFetch(`/api/projects/${projectId}`, {
         method: 'DELETE'
     })
-    dispatch(destroyProject(id))
-    return response;
+    await dispatch(destroyProject(projectId))
+    .then(() => response)
 }
 
 const projectReducer = (state = {}, action) => {
     let newState;
+    let projects;
     switch (action.type) {
         case LOAD_PROJECTS:
             newState = {...state}
-            const projects = Object.values(action.projects)
+            projects = Object.values(action.projects)
             projects.forEach(project => {
                 newState[project.id] = project
             })
@@ -89,8 +91,8 @@ const projectReducer = (state = {}, action) => {
                         [action.id]: action.project}
             return newState;
         case DELETE_PROJECT:
-            newState = {...state}
-            delete newState[action.id];
+            newState = {...state,
+                        [action.id]: null}
             return newState;
         default:
             return state;

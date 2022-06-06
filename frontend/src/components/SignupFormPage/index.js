@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react'
 import { signup } from '../../store/session'
 import { useHistory, Redirect } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import './SignupFormPage.css'
 
 const SignupFormPage = () => {
     const history = useHistory();
@@ -40,16 +39,12 @@ const SignupFormPage = () => {
 
     return (
         <div id='backdrop'>
-            <div id='signup-form'>
+            <div id='form'>
                 <form onSubmit={handleSubmit} >
-                    <div id='tagline'>
-                        <div>
-                            <h1>Ready to join the</h1>
-                        </div>
-                        <div>
-                            <i className="fa-solid fa-circle-h" style={{color: '#20AA22', width: '3vw', height: '3vw'}}></i>
-                            <h1>unt?</h1>
-                        </div>
+                    <div id='message'>
+                        <h1>Ready to join the</h1>
+                        <i className="fa-solid fa-circle-h" style={{color: '#20AA22', width: '3vw', height: '3vw'}}></i>
+                        <h1>unt?</h1>
                     </div>
                     <h4>Fill out the form below, and you'll have access to all of ProjectHuntr's features!</h4>
                     <ul>

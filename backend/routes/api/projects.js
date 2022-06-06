@@ -41,7 +41,8 @@ router.put('/:projectId', requireAuth, validateProject, asyncHandler(async (req,
 
 router.delete('/:projectId', requireAuth, asyncHandler(async (req, res) => {
     const {projectId} = req.params
-    return await Project.destroy({where: {id: projectId}})
+    const project = await Project.findByPk(projectId)
+    return await project.destroy();
 }))
 
 module.exports = router;

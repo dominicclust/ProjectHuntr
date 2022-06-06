@@ -1,21 +1,17 @@
-#backdrop {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    bottom: 0;
-    overflow: scroll;
-    background-color: #20AA22;
-    z-index: -3;
-}
+
 #project-form{
     display: flex;
+    position: absolute;
+    top: 15%;
+    left: 10vw;
+    right: 10vw;
+    background-color: #222222;
+
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
-#tagline
-form {
+#project-form > form {
     background-color: #404040;
     color: white;
     position: absolute;
@@ -71,20 +67,4 @@ form {
     width: 30vw;
     height: 6vw;
 
-}
-
-#buttons {
-    display: flex;
-    justify-content: flex-end;
-}
-#buttons > #submit:disabled {
-    border-color: buttonborder;
-}
-#buttons > * {
-    text-decoration: none;
-    font: inherit;
-    background-color: #20AA22;
-    color: white;
-    padding: .25rem 1rem;
-    margin: 1vw;
 }

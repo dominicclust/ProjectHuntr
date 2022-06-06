@@ -2,23 +2,27 @@
     display: flex;
     position: fixed;
     width: 100%;
-    top: 0px;
-    left: 0px;
-    right: 0px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 85%;
     box-sizing: border-box;
-    padding: 1.2vw 1.2vw;
+    padding: 1.1vw;
     justify-content: space-between;
     align-items: center;
     border-bottom: 0.2vw solid #AAAAAA;
     flex-direction: row;
 }
-.under-navigation > * {
+.under-navigation{
     width: 100%;
+    height: 100%;
+    background-color: #20AA22;
     position: absolute;
-    top: 6.5vw;
+    top: 4vw;
     left: 0;
     right: 0;
     margin: 0;
     padding: 0;
-
+    box-sizing: border-box;
+    z-index: -1
 }

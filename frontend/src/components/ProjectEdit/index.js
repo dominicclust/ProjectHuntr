@@ -27,8 +27,9 @@ const ProjectEdit = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const ownerId = parseInt(user.id)
-        const updatedProject = {title, ownerId, imageUrl, description};
-        await dispatch(putProject(updatedProject)).then(() => history.push('/'))
+        const updatedProject = {id: project.id, title, ownerId, imageUrl, description};
+        await dispatch(putProject(updatedProject))
+        .then(() => history.replace(`/projects/${projectId}`))
     }
     return (
         <div id='backdrop'>

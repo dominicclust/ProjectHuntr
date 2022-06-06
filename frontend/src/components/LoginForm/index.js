@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { login } from '../../store/session'
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, Redirect } from 'react-router-dom';
-import './LoginForm.css'
+
 
 function LoginForm() {
   const history = useHistory();
@@ -29,10 +29,10 @@ function LoginForm() {
         if (data && data.errors) setErrors(data.errors);
       });
     };
-  
+
   return (
     <div id='backdrop'>
-      <div id='login-form'>
+      <div id='form'>
         <form onSubmit={handleSubmit}>
           <div id='message'>
             <h1>Sign in. The </h1>

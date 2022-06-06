@@ -29,13 +29,15 @@ router.post('/', requireAuth, validateReview, asyncHandler (async (req, res) => 
 }))
 router.put('/:reviewId', validateReview, asyncHandler (async (req, res) => {
     const { reviewId } = req.params;
-    const { reviewerId, review, projectId, rating } = req.body
-    const updatedReview = await Review.update({reviewerId, review, projectId, rating}, { where: {id: parseInt(reviewId)}})
+    const {reviewerId, review, projectId, rating } = req.body
+    const updatedReview = await Review.update({reviewerId, review, projectId, rating}, { where: {id: reviewId}})
     return res.json(updatedReview)
 }))
 router.delete('/:reviewId', asyncHandler (async (req, res) => {
     const {reviewId} = req.params
-    return await Review.destroy(reviewId)
+    const review = await Review.findByPk(reviewId)
+    await review.destroy()
+    return reviewId;
 }))
 
 module.exports = router;

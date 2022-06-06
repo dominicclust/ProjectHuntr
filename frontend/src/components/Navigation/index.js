@@ -5,14 +5,13 @@ import ProfileButton from './ProfileButton';
 import { login } from '../../store/session';
 import './Navigation.css';
 
-function Navigation({ isLoaded,}){
+function Navigation({ isLoaded }){
   const dispatch = useDispatch();
   const user = useSelector(state => state.session.user)
   let sessionLinks;
 
   const demoLogin = (e) => {
     e.preventDefault();
-
     return dispatch(login({ credential: 'iEmmaDemo', password: 'password1' }))
     };
 
