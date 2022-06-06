@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { useHistory, useParams } from 'react-router-dom'
-import { postReview } from '../../store/reviews'
+import { postReview, getReviews } from '../../store/reviews'
 import { useSelector, useDispatch } from 'react-redux'
 import './ReviewForm.css'
 
