@@ -24,38 +24,42 @@ const ReviewForm = ({project, setShowForm}) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         const newReview = {reviewerId, review, projectId, rating};
-        await dispatch(postReview(newReview))
+        return await dispatch(postReview(newReview))
+            .then(() => dispatch(getReviews()))
+            .then(() => setShowForm(false))
             .then(() => history.push(`/projects/${projectId}`))
     }
     return (
-        <div id='review-form'>
-            <form onSubmit={handleSubmit}>
-                <ul>
-                    {valErrors && valErrors.map((error, i) => {
-                        return <li key={i}>{error}</li>
-                    })}
-                </ul>
+        <div id='backdrop' onClick={() => setShowForm(false)}>
+            <div id='review-form'>
+                <form onSubmit={handleSubmit}>
+                    <ul>
+                        {valErrors && valErrors.map((error, i) => {
+                            return <li key={i}>{error}</li>
+                        })}
+                    </ul>
 
-                <div>
-                    <label htmlFor='rating'>Rate this project!</label>
-                    <input type='number' value={rating} onChange={(e) => setRating(e.target.value)} />
-                </div>
-                <div>
-                    <label htmlFor='review'>Leave a review!</label>
-                    <textarea
-                        type='text'
-                        id='review'
-                        name='review'
-                        value={review}
-                        onChange={(e) => setReview(e.target.value)}
-                        placeholder='Tell us what you think'
-                    />
-                </div>
-                <div>
-                    <button type='button' onClick={() => setShowForm(false)}>Cancel</button>
-                    <button type='submit'>Submit</button>
-                </div>
-            </form>
+                    <div>
+                        <label htmlFor='rating'>Rate this project!</label>
+                        <input type='number' value={rating} onChange={(e) => setRating(e.target.value)} />
+                    </div>
+                    <div>
+                        <label htmlFor='review'>Leave a review!</label>
+                        <textarea
+                            type='text'
+                            id='review'
+                            name='review'
+                            value={review}
+                            onChange={(e) => setReview(e.target.value)}
+                            placeholder='Tell us what you think'
+                        />
+                    </div>
+                    <div>
+                        <button type='button' onClick={() => setShowForm(false)}>Cancel</button>
+                        <button type='submit'>Submit</button>
+                    </div>
+                </form>
+            </div>
         </div>
     )
 }

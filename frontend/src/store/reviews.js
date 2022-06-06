@@ -48,9 +48,8 @@ export const postReview = (newReview) => async dispatch => {
         method: 'POST',
         body: JSON.stringify({reviewerId, review, projectId, rating})
     })
-    const data = await response.json()
-    dispatch(addReview(data.review))
-    return response;
+    const createdReview = await response.json()
+    return await dispatch(addReview(createdReview))
 }
 
 export const putReview = (updatedReview) => async dispatch => {
@@ -79,7 +78,7 @@ const reviewReducer = (state = {}, action) => {
             newState = {...state};
             const reviews = Object.values(action.reviews)
             reviews.forEach(review => {
-                newState[review.id] =  {...review}
+                newState[review.id] = review
             })
             return newState;
         case ADD_REVIEW:
