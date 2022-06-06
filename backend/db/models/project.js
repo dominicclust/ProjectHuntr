@@ -18,9 +18,9 @@ module.exports = (sequelize, DataTypes) => {
     imageUrl: DataTypes.STRING
   }, {});
   Project.associate = function(models) {
-    Project.belongsTo(models.User, { foreignKey: 'ownerId'})
-    Project.hasMany(models.Review, { foreignKey: 'projectId'})
-    // Project.hasMany(models.Review, { foreignKey: 'projectId'})
+    Project.belongsTo(models.User, { foreignKey: 'ownerId' })
+    Project.hasMany(models.Review, { foreignKey: 'projectId', onDelete: 'cascade', hooks: true})
+    
   };
   return Project;
 };

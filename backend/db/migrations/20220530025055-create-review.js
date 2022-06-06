@@ -11,7 +11,8 @@ module.exports = {
       reviewerId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: {model: 'Users'}
+        references: {model: 'Users'},
+        onDelete: 'cascade'
       },
       review: {
         type: Sequelize.TEXT,
@@ -20,7 +21,8 @@ module.exports = {
       projectId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: {model: 'Projects'}
+        references: {model: 'Projects'},
+        onDelete: 'cascade'
       },
       rating: {
         type: Sequelize.INTEGER
