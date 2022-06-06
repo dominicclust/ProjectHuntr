@@ -41,6 +41,7 @@ export const getProjects = () => async dispatch => {
     return projects;
 };
 
+
 export const postProject = (project) => async dispatch => {
     const response = await csrfFetch('/api/projects', {
         method: 'POST',
@@ -76,16 +77,16 @@ const projectReducer = (state = {}, action) => {
             newState = {...state}
             const projects = Object.values(action.projects)
             projects.forEach(project => {
-                newState[project.id] = {...project}
+                newState[project.id] = project
             })
             return newState;
         case ADD_PROJECT:
             newState = {...state}
-            newState[action.project] = action.project
+            newState[action.project.id] = action.project
             return newState;
         case EDIT_PROJECT:
             newState = {...state,
-                        [action.project.id]: action.project}
+                        [action.id]: action.project}
             return newState;
         case DELETE_PROJECT:
             newState = {...state}

@@ -9,8 +9,16 @@ module.exports = (sequelize, DataTypes) => {
         len: [10, 2000]
       }
     },
-    projectId: DataTypes.INTEGER,
-    reviewerId: DataTypes.INTEGER,
+    projectId: {
+      type: DataTypes.INTEGER,
+      references: {model: 'Projects'},
+      onDelete: 'cascade'
+    },
+    reviewerId: {
+      type: DataTypes.INTEGER,
+      references: {model: 'Users'},
+      onDelete: 'cascade'
+    },
     rating: {
       type: DataTypes.INTEGER,
       validate: {

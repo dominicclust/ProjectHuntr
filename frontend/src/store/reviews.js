@@ -37,9 +37,9 @@ const removeReview = (id) => {
 
 export const getReviews = () => async dispatch => {
     const response = await csrfFetch('/api/reviews')
-    const data = await response.json()
-    dispatch(loadReviews(data.reviews))
-    return response;
+    const reviews = await response.json()
+    dispatch(loadReviews(reviews))
+    return reviews;
 }
 
 export const postReview = (newReview) => async dispatch => {
@@ -48,9 +48,8 @@ export const postReview = (newReview) => async dispatch => {
         method: 'POST',
         body: JSON.stringify({reviewerId, review, projectId, rating})
     })
-    const data = await response.json()
-    dispatch(addReview(data.review))
-    return response;
+    const createdReview = await response.json()
+    return await dispatch(addReview(createdReview))
 }
 
 export const putReview = (updatedReview) => async dispatch => {
@@ -77,8 +76,9 @@ const reviewReducer = (state = {}, action) => {
     switch (action.type) {
         case LOAD_REVIEWS:
             newState = {...state};
-            action.reviews.forEach(review => {
-                newState[review.id] =  review
+            const reviews = Object.values(action.reviews)
+            reviews.forEach(review => {
+                newState[review.id] = review
             })
             return newState;
         case ADD_REVIEW:

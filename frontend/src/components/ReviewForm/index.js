@@ -1,21 +1,18 @@
 import React, {useState, useEffect} from 'react'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import { postReview } from '../../store/reviews'
 import { useSelector, useDispatch } from 'react-redux'
+import './ReviewForm.css'
 
-const ReviewForm = ({showForm, setShowForm}) => {
+const ReviewForm = ({project, setShowForm}) => {
+    const { projectId } = useParams()
     const history = useHistory();
     const dispatch = useDispatch();
     const user = useSelector(state => state.session.user)
-    const project = useSelector(state => Object.values(state.projects)
-        .find(project => project.id === parseInt(projectId)))
     const [review, setReview] = useState('')
     const [rating, setRating] = useState(0)
-    const [stars, setStars] = useState(0)
     const [valErrors, setValErrors] = useState([])
     const reviewerId = parseInt(user.id);
-    const projectId = parseInt(project.id);
-
 
     useEffect(() => {
         const errors = []
@@ -27,49 +24,44 @@ const ReviewForm = ({showForm, setShowForm}) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         const newReview = {reviewerId, review, projectId, rating};
-        await dispatch(postReview(newReview)).then(() => setShowForm(false))
+        return await dispatch(postReview(newReview))
+            .then(() => dispatch(getReviews()))
+            .then(() => setShowForm(false))
+            .then(() => history.push(`/projects/${projectId}`))
     }
     return (
-        showForm && (
-        <div id='backdrop'>
+        <div id='backdrop' onClick={() => setShowForm(false)}>
             <div id='review-form'>
                 <form onSubmit={handleSubmit}>
                     <ul>
                         {valErrors && valErrors.map((error, i) => {
-                            <li key={i}>{error}</li>
+                            return <li key={i}>{error}</li>
                         })}
                     </ul>
-                    <label>Rate this project!</label>
-                    <div value={rating} onChange={() => setRating(stars)}>
-                        <div value={1} onClick={(e)=> setStars(e.target.value)}>
-                            <i className={stars >= 1 ? 'fa-solid fa-star fa-med' : 'fa-regular fa-star fa-med'}></i>
-                        </div>
-                        <div value={2} onClick={(e)=> setStars(e.target.value)}>
-                            <i className={stars >= 2 ? 'fa-solid fa-star fa-med' : 'fa-regular fa-star fa-med'}></i>
-                        </div>
-                        <div value={3} onClick={(e)=> setStars(e.target.value)}>
-                            <i className={stars >= 3 ? 'fa-solid fa-star fa-med' : 'fa-regular fa-star fa-med'}></i>
-                        </div>
-                        <div value={4} onClick={(e)=> setStars(e.target.value)}>
-                            <i className={stars >= 4 ? 'fa-solid fa-star fa-med' : 'fa-regular fa-star fa-med'}></i>
-                        </div>
-                        <div value={5} onClick={(e)=> setStars(e.target.value)}>
-                            <i className={stars === 5 ? 'fa-solid fa-star fa-med' : 'fa-regular fa-star fa-med'}></i>
-                        </div>
+
+                    <div>
+                        <label htmlFor='rating'>Rate this project!</label>
+                        <input type='number' value={rating} onChange={(e) => setRating(e.target.value)} />
                     </div>
-                    <label>Leave a review!</label>
-                    <textarea
-                        type='text'
-                        value={review}
-                        onChange={(e) => setReview(e.target.value)}
-                        placeholder='Tell us what you think'
-                    />
-                    <button type='button' onClick={() => setShowForm(false)}>Cancel</button>
-                    <button type='submit'>Submit</button>
+                    <div>
+                        <label htmlFor='review'>Leave a review!</label>
+                        <textarea
+                            type='text'
+                            id='review'
+                            name='review'
+                            value={review}
+                            onChange={(e) => setReview(e.target.value)}
+                            placeholder='Tell us what you think'
+                        />
+                    </div>
+                    <div>
+                        <button type='button' onClick={() => setShowForm(false)}>Cancel</button>
+                        <button type='submit'>Submit</button>
+                    </div>
                 </form>
             </div>
         </div>
-    ))
+    )
 }
 
 export default ReviewForm;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { postProject } from '../../store/projects';
+import { getProjects, postProject } from '../../store/projects';
 import { useHistory } from 'react-router-dom';
 import './ProjectForm.css'
 
@@ -15,6 +15,8 @@ const ProjectForm = () => {
 
     const projectArray = Object.values(projects)
     const dispatch = useDispatch();
+
+
     useEffect(() => {
         const errors = [];
 
@@ -29,7 +31,9 @@ const ProjectForm = () => {
         e.preventDefault();
         const ownerId = parseInt(user.id)
         const newProject = {title, ownerId, imageUrl, description};
-        await dispatch(postProject(newProject)).then(() => history.push('/'))
+        return await dispatch(postProject(newProject))
+        .then(() => dispatch(getProjects()))
+        .then(() => history.push('/'))
     }
     return (
         <div id='backdrop'>
